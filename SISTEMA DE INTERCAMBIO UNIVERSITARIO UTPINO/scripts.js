@@ -532,6 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener("DOMContentLoaded", () => {
     const btnAbrirSoporte = document.getElementById('btnAbrirSoporte');
     const contenedorFormulario = document.getElementById('contenedorFormulario');
+    const btnCerrarSoporte = document.getElementById('btnCerrarSoporte');
 
     if (btnAbrirSoporte && contenedorFormulario) {
         btnAbrirSoporte.addEventListener('click', (e) => {
@@ -539,9 +540,17 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // 1. Quitamos la clase d-none para que aparezca el formulario
             contenedorFormulario.classList.remove('d-none');
+            closeAll.classList.add('d-none'); // Cerramos el modal de inicio de sesión si está abierto
             
             // 2. Hacemos que la pantalla baje suavemente hasta el formulario
             document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+    if (btnCerrarSoporte && contenedorFormulario) {
+        btnCerrarSoporte.addEventListener('click', (e) => {
+            e.preventDefault();
+            contenedorFormulario.classList.add('d-none');
+            closeAll.classList.remove('d-none'); // Volvemos a mostrar el modal de inicio de sesión
         });
     }
 });
