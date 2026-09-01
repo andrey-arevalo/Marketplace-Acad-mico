@@ -211,6 +211,42 @@ body.custom-body {
     color: #FFF !important;
 }
 
+/* ========================================== */
+/* ESTILOS CORREGIDOS - SECCIÓN CÓMO FUNCIONA */
+/* ========================================== */
+
+.how-step-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Movemos el número grande hacia la parte superior derecha de la tarjeta */
+.how-step-bg-number {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    /* Alineado a la derecha para dejar libre la izquierda al ícono */
+    font-size: 5rem;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.10);
+    /* Tono translúcido muy sutil */
+    line-height: 1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* El contenido mantiene el ícono libre a la izquierda y baja los textos ordenadamente */
+.how-step-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Caja del ícono cuadrado con bordes redondeados */
+.how-icon-box {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
 /* ========================================================================== */
 /* 6. SECCIÓN DE FILTROS, CATEGORÍAS Y TABS                                   */
 /* ========================================================================== */
