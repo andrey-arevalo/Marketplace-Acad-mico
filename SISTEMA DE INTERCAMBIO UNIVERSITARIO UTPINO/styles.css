@@ -186,6 +186,9 @@ body.custom-body {
 .price-main {
     color: var(--text-main) !important;
 }
+.intercambio-card {
+    color:rgb(243, 187, 65) !important;
+}
 
 /* Precio anterior tachado para mostrar ofertas */
 .price-old {
@@ -212,7 +215,7 @@ body.custom-body {
 }
 
 /* ========================================== */
-/* ESTILOS CORREGIDOS - SECCIÓN CÓMO FUNCIONA */
+/* SECCIÓN CÓMO FUNCIONA */
 /* ========================================== */
 
 .how-step-card {

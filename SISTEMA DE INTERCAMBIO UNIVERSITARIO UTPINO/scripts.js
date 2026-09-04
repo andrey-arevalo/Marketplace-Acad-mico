@@ -115,7 +115,90 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // CONTROL DEL MODAL
     // ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const btnAnadirArticulo = document.getElementById('btnAnadirArticulo');
+    const customArticleModal = document.getElementById('customArticleModal');
+    const closeArticleBtn = document.getElementById('closeArticleBtn');
+    const addArticleForm = document.getElementById('addArticleForm');
+    const customLoginModal = document.getElementById('customLoginModal');
 
+    if (btnAnadirArticulo && customArticleModal) {
+        btnAnadirArticulo.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Validar si hay sesión iniciada antes de abrir el modal
+            const sesionActiva = JSON.parse(localStorage.getItem('utpinoSesion'));
+            if (!sesionActiva) {
+                alert('Debes iniciar sesión con tu cuenta UTP para publicar un artículo.');
+                // Opcional: abre el modal de login automáticamente
+                const openLoginBtn = document.getElementById('openLoginBtn');
+                if (openLoginBtn) openLoginBtn.click();
+                return;
+            } else {
+                // Si hay sesión, cierra el modal de login si está abierto
+                if (customLoginModal) {
+                    customLoginModal.style.display = 'none';
+                }
+            }
+
+            customArticleModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    if (closeArticleBtn && customArticleModal) {
+        closeArticleBtn.addEventListener('click', () => {
+            customArticleModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    }
+
+    // Cerrar si hace clic fuera del contenido del modal de artículos
+    window.addEventListener('click', (e) => {
+        if (e.target === customArticleModal) {
+            customArticleModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Manejador del formulario para guardar el artículo (Demo en LocalStorage)
+    if (addArticleForm) {
+        addArticleForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const sesionActiva = JSON.parse(localStorage.getItem('utpinoSesion'));
+            
+            const nuevoArticulo = {
+                id: Date.now(),
+                titulo: addArticleForm.querySelector('input[type="text"]').value,
+                precio: addArticleForm.querySelector('input[type="number"]').value,
+                categoria: addArticleForm.querySelector('select').value,
+                estado: addArticleForm.querySelectorAll('input[type="text"]')[1].value,
+                imagen: addArticleForm.querySelector('input[type="url"]').value,
+                vendedorId: sesionActiva ? sesionActiva.id : null,
+                vendedorNombre: sesionActiva ? sesionActiva.name : 'Anónimo',
+                fecha: new Date().toISOString()
+            };
+
+            // Guardar en localStorage
+            let articulos = JSON.parse(localStorage.getItem('utpinoArticulos')) || [];
+            articulos.push(nuevoArticulo);
+            localStorage.setItem('utpinoArticulos', JSON.stringify(articulos));
+
+            alert('¡Artículo publicado con éxito!');
+            addArticleForm.reset();
+            customArticleModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Opcional: Recargar la página para mostrar el nuevo artículo si renderizas desde localStorage
+            // location.reload();
+        });
+    }
+});
+
+// ==========================================
+// CONTROL DEL MODAL DE LOGIN
+// ==========================================
     const modal = document.getElementById('customLoginModal');
     const openBtn = document.getElementById('openLoginBtn');
     const closeBtn = document.getElementById('closeLoginBtn');
@@ -454,7 +537,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1200);
         });
     }
-
     // ==========================================
     // VERIFICAR SI YA HAY UNA SESIÓN
     // ==========================================
@@ -527,12 +609,58 @@ document.addEventListener('DOMContentLoaded', () => {
             registerMessage.textContent = '';
         }
     }
+    // ==========================================
+    // ACTUALIZAR BOTÓN DE USUARIO Y MOSTRAR "CERRAR SESIÓN"
+    // ==========================================
+    function actualizarBotonUsuario(usuario) {
+        if (!openBtn) return;
+        
+        // Muestra el nombre del usuario logueado
+        openBtn.innerHTML = `<i class="fa-solid fa-user me-2"></i>${usuario.name}`;
+        openBtn.classList.add('user-logged');
 
+        // HACES APARECER EL BOTÓN DE CERRAR SESIÓN REMOVIENDO 'd-none'
+        const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+        if (btnCerrarSesion) {
+            btnCerrarSesion.classList.remove('d-none');
+        }
+    }
+    
+    // ==========================================
+    // CERRAR SESIÓN
+    // ==========================================
+    function cerrarSesion() {
+        // 1. Eliminar la sesión del almacenamiento local
+        localStorage.removeItem('utpinoSesion');
 
+        // 2. Restaurar el botón de usuario a su estado original
+        if (openBtn) {
+            openBtn.innerHTML = `<i class="fa-solid fa-user me-2"></i>Iniciar Sesión`; // Cambia el texto según el diseño original de tu botón
+            openBtn.classList.remove('user-logged');
+        }
+
+        // 3. Opcional: Recargar la página o limpiar formularios para actualizar la vista
+        window.location.reload(); 
+    }
+
+    // ==========================================
+    // MANEJADOR PARA EL BOTÓN DE CERRAR SESIÓN
+    // ==========================================
+    const btnCerrarSesion = document.getElementById('btnCerrarSesion'); // Asegúrate de tener este ID en tu HTML
+    if (btnCerrarSesion) {
+        btnCerrarSesion.addEventListener('click', (e) => {
+            e.preventDefault();
+            cerrarSesion();
+        });
+    }
+    // ==========================================
+    // REGISTRO DE REPORTES
+    // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const btnAbrirSoporte = document.getElementById('btnAbrirSoporte');
     const contenedorFormulario = document.getElementById('contenedorFormulario');
     const btnCerrarSoporte = document.getElementById('btnCerrarSoporte');
+    const closeAll = document.getElementById('closeAll'); // Botón de cerrar modal de inicio de sesión
 
     if (btnAbrirSoporte && contenedorFormulario) {
         btnAbrirSoporte.addEventListener('click', (e) => {
@@ -541,6 +669,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // 1. Quitamos la clase d-none para que aparezca el formulario
             contenedorFormulario.classList.remove('d-none');
             closeAll.classList.add('d-none'); // Cerramos el modal de inicio de sesión si está abierto
+            scrollTo(0, 0); // Asegura que la página esté en la parte superior antes de hacer scroll al formulario
             
             // 2. Hacemos que la pantalla baje suavemente hasta el formulario
             document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
@@ -553,4 +682,5 @@ document.addEventListener("DOMContentLoaded", () => {
             closeAll.classList.remove('d-none'); // Volvemos a mostrar el modal de inicio de sesión
         });
     }
+    
 });
