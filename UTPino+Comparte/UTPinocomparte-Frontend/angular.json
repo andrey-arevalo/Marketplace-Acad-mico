@@ -24,12 +24,18 @@
                 "input": "public"
               }
             ],
+<<<<<<< Updated upstream
             "styles": [
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+=======
+          "styles": [
+              "src/app/components/bootstrap-5.3.8-dist/css/bootstrap.min.css",
+              "src/styles.css"
+>>>>>>> Stashed changes
             ]
           },
           "configurations": {

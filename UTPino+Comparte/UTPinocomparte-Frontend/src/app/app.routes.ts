@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+<<<<<<< Updated upstream
 import { InicioComponent } from './pages/inicio/inicio';
 import { LoginComponent } from './pages/login/login';
 import { RegistroComponent } from './pages/registro/registro';
@@ -28,3 +29,12 @@ export const routes: Routes = [
   // Comodín para rutas no encontradas (Redirige al inicio o una página 404)
   { path: '**', redirectTo: '' }
 ];
+=======
+import { InicioComponent } from './components/inicio/inicio.component'; // Asegúrate que esta ruta coincida con la real
+import { SoporteComponent } from './components/soporte/soporte.component'; // O el nombre de tu otro componente
+
+export const routes: Routes = [
+  { path: '', component: InicioComponent },        // Ruta principal (por defecto)
+  { path: 'soporte', component: SoporteComponent } // Ruta secundaria con un path único
+];
+>>>>>>> Stashed changes
