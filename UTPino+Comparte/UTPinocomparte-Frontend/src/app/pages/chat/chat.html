@@ -1,0 +1,25 @@
+<div class="chat-container">
+  <!-- Cabecera del chat -->
+  <div class="chat-header">
+    <h5>Chat con el Vendedor</h5>
+  </div>
+
+  <!-- Historial de mensajes -->
+  <div class="chat-messages">
+    <div *ngFor="let msg of mensajes" 
+         [ngClass]="{'mensaje-mio': msg.idRemitente === idUsuarioActual, 'mensaje-otro': msg.idRemitente !== idUsuarioActual}">
+      <p>{{ msg.contenido }}</p>
+      <span class="text-muted small" *ngIf="msg.fechaEnvio">{{ msg.fechaEnvio | date:'shortTime' }}</span>
+    </div>
+  </div>
+
+  <!-- Input para escribir nuevo mensaje -->
+  <div class="chat-input-area">
+    <input type="text" 
+           [(ngModel)]="nuevoMensajeTexto" 
+           (keyup.enter)="enviar()"
+           placeholder="Escribe un mensaje sobre el artículo..." 
+           class="form-control">
+    <button class="btn btn-primary" (click)="enviar()">Enviar</button>
+  </div>
+</div>
