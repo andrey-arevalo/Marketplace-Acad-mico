@@ -20,9 +20,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
-                "glob": "**/*",
-                "input": "public"
-              }
+            "glob": "**/*",
+            "input": "src/app/components/bootstrap-5.3.8-dist",
+            "output": "/bootstrap"
+            },
+            "src/favicon.ico",
+            "src/assets"
             ],
             "styles": [
               "src/app/components/bootstrap-5.3.8-dist/css/bootstrap.min.css",

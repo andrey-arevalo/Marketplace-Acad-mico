@@ -1,0 +1,86 @@
+/* Fondo oscuro translúcido que cubre toda la pantalla */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(30, 35, 30, 0.75); /* Tono oscuro elegante acorde al sistema */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  backdrop-filter: blur(4px); /* Efecto difuminado de fondo */
+}
+
+/* Contenedor principal de la tarjeta modal */
+.custom-modal-dialog {
+  width: 100%;
+  max-width: 440px;
+  padding: 1rem;
+}
+
+/* Color de fondo estilo crema/marfil de la tarjeta (Figma) */
+.modal-figma-bg {
+  background-color: #fcf6f0 !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Estilo del logotipo circular */
+.modal-logo-figma {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+}
+
+/* Tipografía de títulos y textos del modal */
+.modal-title-figma {
+  color: #2c3e35;
+  font-family: serif; /* O la fuente institucional que utilices */
+}
+
+.modal-desc-figma {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Botones de inicio rápido (Google / Microsoft) */
+.social-btn-figma {
+  background-color: #f3e5dc !important;
+  border: 1px solid #e2d2c7 !important;
+  color: #333 !important;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.social-btn-figma:hover {
+  background-color: #ebdcd2 !important;
+}
+
+/* Botón principal de contorno o estilo destacado (Correo institucional) */
+.gold-outline-btn {
+  background-color: transparent !important;
+  border: 1.5px dashed #d4a373 !important; /* Estilo de línea punteada sutil como en Figma */
+  color: #5c4033 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.gold-outline-btn:hover {
+  background-color: rgba(212, 163, 115, 0.1) !important;
+}
+
+/* Enlaces y textos inferiores */
+.gold-link {
+  color: #b08968 !important;
+}
+
+.gold-link:hover {
+  color: #7f5539 !important;
+  text-decoration: underline !important;
+}
+
+.terms-text {
+  font-size: 0.75rem;
+  color: #8c8c8c;
+}

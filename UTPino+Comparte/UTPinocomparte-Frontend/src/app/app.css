@@ -344,29 +344,30 @@ body.custom-body {
 
 /* Capa de superposición oscura de fondo para el modal */
 .custom-modal-overlay {
-    display: none;
-    /* Se activa dinámicamente mediante JavaScript */
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(40, 45, 40, 0.45);
-    /* Tonalidad translúcida suave */
-    backdrop-filter: blur(2px);
-    /* Efecto difuminado sutil de profundidad */
-    z-index: 99999;
-    align-items: center;
+    background-color: rgba(45, 52, 45, 0.75); /* Tono oscuro con matiz verde idéntico al prototipo */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    z-index: 9999;
+    display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-/* Contenedor principal de la caja de diálogo del modal */
+/* 2. Caja del modal con el color crema/marfil y los bordes precisos */
 .custom-modal-dialog {
     width: 100%;
-    max-width: 480px;
-    padding: 20px;
-    animation: scaleIn 0.2s ease-out;
-    /* Animación de apertura fluida */
+    max-width: 460px;
+    background-color: #FDF9F5 !important; /* Color crema suave del diseño original */
+    border-radius: 20px !important;       /* Curva de las esquinas idéntica al Figma */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); /* Sombra flotante profunda */
+    z-index: 10000;
+    padding: 32px 24px;
+    position: relative;
 }
 
 /* Animación de escala para la aparición del modal */

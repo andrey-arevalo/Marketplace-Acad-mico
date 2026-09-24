@@ -14,8 +14,7 @@
             </p>
 
             <div class="d-flex flex-wrap gap-3 mb-5">
-                <!-- Usamos routerLink o dejamos el disparador del login según prefieras -->
-                <button routerLink="/nuevo-articulo" class="btn btn-lg rounded-3 px-4 fw-bold gold-main-btn">
+                <button routerLink="/nuevo-articulo" class="stat-container" class="btn btn-lg rounded-3 px-4 fw-bold gold-main-btn">
                     Empezar ahora <i class="fa-solid fa-arrow-right ms-2"></i>
                 </button>
                 <a routerLink="/soporte"
@@ -73,170 +72,8 @@
     </div>
 </main>
 
-<!-- MODAL LOGIN / REGISTRO -->
-<div class="custom-modal-overlay">
-    <div class="custom-modal-dialog">
-        <div class="modal-content border-0 rounded-4 p-3 modal-figma-bg shadow-lg position-relative">
-
-            <!-- BOTÓN CERRAR -->
-            <div class="modal-header border-0 pb-0 justify-content-end">
-                <!-- Puedes enlazar esto a una función para cerrar o cambiar de ruta -->
-                <button type="button" routerLink="/inicio" class="btn-close shadow-none"></button>
-            </div>
-
-            <div class="modal-body text-center px-4 pt-0 pb-4">
-
-                <!-- LOGO -->
-                <div class="mb-3">
-                    <img src="imgs/logo.png.jpeg" alt="Logo UTPINO"
-                        class="rounded-circle border border-2 border-white shadow-sm modal-logo-figma">
-                </div>
-
-                <!-- TÍTULO DINÁMICO (Cambia según el estado en TS) -->
-                <h4 class="fw-bold modal-title-figma mb-2">
-                    {{ isRegisterMode ? 'Crea tu cuenta' : 'Bienvenido a UTPINO' }}<br>
-                    <span *ngIf="!isRegisterMode">COMPARTE</span>
-                </h4>
-
-                <p class="modal-desc-figma small mb-4">
-                    {{ isRegisterMode ? 'Regístrate con tu correo institucional UTP.' : 'Comunidad universitaria UTP
-                    para comprar, vender e intercambiar con confianza.' }}
-                </p>
-
-                <!-- ========================= -->
-                <!-- FORMULARIO LOGIN -->
-                <!-- ========================= -->
-                <form *ngIf="!isRegisterMode" (ngSubmit)="onLogin()">
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">
-                            Correo institucional
-                        </label>
-                        <input type="email" [(ngModel)]="loginEmail" name="loginEmail"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="correo@utp.edu.pe" required>
-                    </div>
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">
-                            Contraseña
-                        </label>
-                        <div class="position-relative">
-                            <input [type]="showLoginPassword ? 'text' : 'password'" [(ngModel)]="loginPassword"
-                                name="loginPassword"
-                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
-                                placeholder="Ingresa tu contraseña" required>
-                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2"
-                                (click)="showLoginPassword = !showLoginPassword">
-                                <i class="fa-solid" [ngClass]="showLoginPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="small mb-3 text-danger" *ngIf="loginMessage">{{ loginMessage }}</div>
-
-                    <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
-                        Iniciar sesión
-                    </button>
-
-                    <p class="small mb-0">
-                        ¿No tienes una cuenta?
-                        <button type="button" (click)="isRegisterMode = true"
-                            class="btn btn-link p-0 fw-bold gold-link text-decoration-none">
-                            Crear cuenta
-                        </button>
-                    </p>
-                </form>
-
-                <!-- ========================= -->
-                <!-- FORMULARIO REGISTRO -->
-                <!-- ========================= -->
-                <form *ngIf="isRegisterMode" (ngSubmit)="onRegister()">
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">
-                            Nombre completo
-                        </label>
-                        <input type="text" [(ngModel)]="registerName" name="registerName"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="Ej. Juan Pérez" required>
-                    </div>
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">
-                            Correo institucional
-                        </label>
-                        <input type="email" [(ngModel)]="registerEmail" name="registerEmail"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="correo@utp.edu.pe" required>
-                    </div>
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">
-                            Contraseña
-                        </label>
-                        <div class="position-relative">
-                            <input [type]="showRegisterPassword ? 'text' : 'password'" [(ngModel)]="registerPassword"
-                                name="registerPassword"
-                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
-                                placeholder="Mínimo 6 caracteres" minlength="6" required>
-                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2"
-                                (click)="showRegisterPassword = !showRegisterPassword">
-                                <i class="fa-solid" [ngClass]="showRegisterPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">
-                            Confirmar contraseña
-                        </label>
-                        <div class="position-relative">
-                            <input [type]="showConfirmPassword ? 'text' : 'password'"
-                                [(ngModel)]="registerPasswordConfirm" name="registerPasswordConfirm"
-                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
-                                placeholder="Repite tu contraseña" minlength="6" required>
-                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2"
-                                (click)="showConfirmPassword = !showConfirmPassword">
-                                <i class="fa-solid" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="small mb-3 text-danger" *ngIf="registerMessage">{{ registerMessage }}</div>
-
-                    <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
-                        Crear cuenta
-                    </button>
-
-                    <p class="small mb-0">
-                        ¿Ya tienes una cuenta?
-                        <button type="button" (click)="isRegisterMode = false"
-                            class="btn btn-link p-0 fw-bold gold-link text-decoration-none">
-                            Iniciar sesión
-                        </button>
-                    </p>
-                </form>
-
-                <p class="modal-footer-text-figma mt-4">
-                    Al continuar, aceptas los
-                    <a href="#" class="gold-link text-decoration-none">
-                        Términos de uso
-                    </a>
-                    y la
-                    <a href="#" class="gold-link text-decoration-none">
-                        Política de privacidad.
-                    </a>
-                </p>
-
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- SECCIÓN DE ARTÍCULOS Y FILTROS -->
 <section class="container-fluid px-4 px-lg-5 py-5 content-section-figma">
-
     <!-- Filtros por categoría -->
     <div class="d-flex flex-wrap gap-2 mb-3 overflow-auto pb-2">
         <button class="btn px-3 py-2 rounded-pill fw-bold category-btn"
@@ -281,7 +118,7 @@
         </button>
     </div>
 
-    <!-- Contenedor de pestañas (Todos / En venta / Intercambio) -->
+    <!-- Contenedor de pestañas -->
     <div class="d-flex gap-3 mb-4 border-bottom pb-2 tabs-figma-container">
         <button class="btn btn-link text-decoration-none tab-btn p-0 pb-2"
             [ngClass]="selectedTab === 'all' ? 'fw-bold tab-active' : 'fw-semibold tab-inactive'"
@@ -300,7 +137,7 @@
         <span class="text-muted small" id="results-count">{{ filteredItems.length }} resultados</span>
     </div>
 
-    <!-- Panel de artículos con bucle *ngFor y filtrado inteligente -->
+    <!-- Panel de artículos -->
     <div class="row g-4">
         <div *ngFor="let item of filteredItems" class="col-12 col-sm-6 col-lg-3 item-card">
             <div class="card border-0 shadow-sm p-3 rounded-4 position-relative h-100 card-figma-bg">
@@ -324,83 +161,62 @@
                             class="fs-5 fw-bold intercambio-card">Intercambio</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
 
-<!-- ========================================== -->
 <!-- SECCIÓN CÓMO FUNCIONA -->
-<!-- ========================================== -->
 <section class="container-fluid px-4 px-lg-5 py-5 how-section-figma">
-    <!-- Título y subtítulo de la sección -->
     <div class="text-center mb-5">
         <h2 class="fw-bold title-figma mb-1">¿Cómo funciona?</h2>
         <p class="text-muted small">Tres pasos para tu primera transacción</p>
     </div>
 
-    <!-- Contenedor de las 3 tarjetas de pasos -->
     <div class="row g-4 justify-content-center">
-
         <!-- Paso 01 -->
         <div class="col-12 col-md-4">
             <div class="card border-0 shadow-sm p-4 rounded-4 h-100 card-figma-bg how-step-card">
-                <!-- Número grande posicionado a la derecha para no chocar con el ícono -->
                 <span class="how-step-bg-number">01</span>
-                <!-- Contenido principal -->
                 <div class="how-step-content">
-                    <div
-                        class="mb-3 d-inline-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm how-icon-box">
+                    <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm how-icon-box">
                         <i class="fa-solid fa-plus gold-text"></i>
                     </div>
                     <h5 class="fw-bold card-title-figma mb-2">Publica tu artículo</h5>
-                    <p class="card-sub small mb-0">Agrega fotos, descripción y precio en menos de 2 minutos. Elige entre
-                        vender o intercambiar.</p>
+                    <p class="card-sub small mb-0">Agrega fotos, descripción y precio en menos de 2 minutos. Elige entre vender o intercambiar.</p>
                 </div>
             </div>
         </div>
-
         <!-- Paso 02 -->
         <div class="col-12 col-md-4">
             <div class="card border-0 shadow-sm p-4 rounded-4 h-100 card-figma-bg how-step-card">
-                <!-- Número grande posicionado a la derecha para no chocar con el ícono -->
                 <span class="how-step-bg-number">02</span>
-                <!-- Contenido principal -->
                 <div class="how-step-content">
-                    <div
-                        class="mb-3 d-inline-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm how-icon-box">
+                    <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm how-icon-box">
                         <i class="fa-solid fa-magnifying-glass gold-text"></i>
                     </div>
                     <h5 class="fw-bold card-title-figma mb-2">Conecta con compradores</h5>
-                    <p class="card-sub small mb-0">Recibe mensajes directos de interesados. Negocia el precio o propón
-                        un intercambio.</p>
+                    <p class="card-sub small mb-0">Recibe mensajes directos de interesados. Negocia el precio o propón un intercambio.</p>
                 </div>
             </div>
         </div>
-
         <!-- Paso 03 -->
         <div class="col-12 col-md-4">
             <div class="card border-0 shadow-sm p-4 rounded-4 h-100 card-figma-bg how-step-card">
-                <!-- Número grande posicionado a la derecha para no chocar con el ícono -->
                 <span class="how-step-bg-number">03</span>
-                <!-- Contenido principal -->
                 <div class="how-step-content">
-                    <div
-                        class="mb-3 d-inline-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm how-icon-box">
+                    <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm how-icon-box">
                         <i class="fa-solid fa-shield-halved gold-text"></i>
                     </div>
                     <h5 class="fw-bold card-title-figma mb-2">Cierra con seguridad</h5>
-                    <p class="card-sub small mb-0">Utiliza nuestro sistema de pago protegido. Liberamos el dinero cuando
-                        confirmas la entrega.</p>
+                    <p class="card-sub small mb-0">Utiliza nuestro sistema de pago protegido. Liberamos el dinero cuando confirmas la entrega.</p>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 
-<!-- Sección de Características e Indicadores -->
+<!-- Footer y CTA -->
 <div class="container-fluid px-4 px-lg-5 py-4 footer-figma">
     <div class="row text-center gy-3 mb-5">
         <div class="col-6 col-md-3">
@@ -425,18 +241,13 @@
         </div>
     </div>
 
-    <!-- Tarjeta Central CTA: ¿Tienes algo que vender o intercambiar? -->
     <div class="row justify-content-center pb-4">
         <div class="col-12 col-lg-10">
             <div class="card card-figma-bg border-0 shadow-sm p-5 text-center rounded-4">
-                <h3 class="fw-bold title-figma mb-2" style="font-size: 1.8rem;">¿Tienes algo que vender o intercambiar?
-                </h3>
-                <p class="text-muted small mb-4">Únete a más de 12.500 usuarios que ya usan UTPINO COMPARTE para dar
-                    nueva vida a sus artículos.</p>
+                <h3 class="fw-bold title-figma mb-2" style="font-size: 1.8rem;">¿Tienes algo que vender o intercambiar?</h3>
+                <p class="text-muted small mb-4">Únete a más de 12.500 usuarios que ya usan UTPINO COMPARTE para dar nueva vida a sus artículos.</p>
                 <div>
-                    <!-- Botón conectado a la función de TypeScript para abrir el modal si el usuario no ha iniciado sesión -->
-                    <button type="button" class="btn gold-main-btn px-4 py-2 rounded-pill fw-bold"
-                        (click)="openAuthModal()">
+                    <button type="button" class="btn gold-main-btn px-4 py-2 rounded-pill fw-bold" (click)="openAuthModal()">
                         + Publicar mi primer artículo
                     </button>
                 </div>
@@ -446,9 +257,148 @@
 </div>
 
 <!-- ========================================== -->
-<!-- REGISTRO DE ARTÍCULOS -->
+<!-- MODAL LOGIN / REGISTRO (SUPERPUESTO CON BLUR) -->
 <!-- ========================================== -->
-<div id="customArticleModal" class="custom-modal-overlay" [style.display]="isArticleModalOpen ? 'block' : 'none'">
+<div class="custom-modal-overlay" *ngIf="isAuthModalOpen">
+    <div class="custom-modal-dialog">
+        <div class="modal-content border-0 rounded-4 p-3 modal-figma-bg shadow-lg position-relative">
+
+            <!-- BOTÓN CERRAR -->
+            <div class="modal-header border-0 pb-0 justify-content-end">
+                <button type="button" class="btn-close shadow-none" (click)="isAuthModalOpen = false"></button>
+            </div>
+
+            <div class="modal-body text-center px-4 pt-0 pb-4">
+
+                <!-- LOGO -->
+                <div class="mb-3">
+                    <img src="imgs/logo.png.jpeg" alt="Logo UTPINO"
+                        class="rounded-circle border border-2 border-white shadow-sm modal-logo-figma">
+                </div>
+
+                <!-- TÍTULO DINÁMICO -->
+                <h4 class="fw-bold modal-title-figma mb-2">
+                    {{ isRegisterMode ? 'Crea tu cuenta' : 'Bienvenido a UTPINO' }}<br>
+                    <span *ngIf="!isRegisterMode">COMPARTE</span>
+                </h4>
+
+                <p class="modal-desc-figma small mb-4">
+                    {{ isRegisterMode ? 'Regístrate con tu correo institucional UTP.' : 'Comunidad universitaria UTP para comprar, vender e intercambiar con confianza.' }}
+                </p>
+
+                <!-- FORMULARIO LOGIN -->
+                <form *ngIf="!isRegisterMode" (ngSubmit)="onLogin()">
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-bold small">Correo institucional</label>
+                        <input type="email" [(ngModel)]="loginEmail" name="loginEmail"
+                            class="form-control form-control-figma rounded-pill shadow-none"
+                            placeholder="correo@utp.edu.pe" required>
+                    </div>
+
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-bold small">Contraseña</label>
+                        <div class="position-relative">
+                            <input [type]="showLoginPassword ? 'text' : 'password'" [(ngModel)]="loginPassword"
+                                name="loginPassword"
+                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
+                                placeholder="Ingresa tu contraseña" required>
+                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2"
+                                (click)="showLoginPassword = !showLoginPassword">
+                                <i class="fa-solid" [ngClass]="showLoginPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="small mb-3 text-danger" *ngIf="loginMessage">{{ loginMessage }}</div>
+
+                    <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
+                        Iniciar sesión
+                    </button>
+
+                    <p class="small mb-0">
+                        ¿No tienes una cuenta?
+                        <button type="button" (click)="isRegisterMode = true"
+                            class="btn btn-link p-0 fw-bold gold-link text-decoration-none">
+                            Crear cuenta
+                        </button>
+                    </p>
+                </form>
+
+                <!-- FORMULARIO REGISTRO -->
+                <form *ngIf="isRegisterMode" (ngSubmit)="onRegister()">
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-bold small">Nombre completo</label>
+                        <input type="text" [(ngModel)]="registerName" name="registerName"
+                            class="form-control form-control-figma rounded-pill shadow-none"
+                            placeholder="Ej. Juan Pérez" required>
+                    </div>
+
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-bold small">Correo institucional</label>
+                        <input type="email" [(ngModel)]="registerEmail" name="registerEmail"
+                            class="form-control form-control-figma rounded-pill shadow-none"
+                            placeholder="correo@utp.edu.pe" required>
+                    </div>
+
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-bold small">Contraseña</label>
+                        <div class="position-relative">
+                            <input [type]="showRegisterPassword ? 'text' : 'password'" [(ngModel)]="registerPassword"
+                                name="registerPassword"
+                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
+                                placeholder="Mínimo 6 caracteres" minlength="6" required>
+                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2"
+                                (click)="showRegisterPassword = !showRegisterPassword">
+                                <i class="fa-solid" [ngClass]="showRegisterPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-bold small">Confirmar contraseña</label>
+                        <div class="position-relative">
+                            <input [type]="showConfirmPassword ? 'text' : 'password'"
+                                [(ngModel)]="registerPasswordConfirm" name="registerPasswordConfirm"
+                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
+                                placeholder="Repite tu contraseña" minlength="6" required>
+                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2"
+                                (click)="showConfirmPassword = !showConfirmPassword">
+                                <i class="fa-solid" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="small mb-3 text-danger" *ngIf="registerMessage">{{ registerMessage }}</div>
+
+                    <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
+                        Crear cuenta
+                    </button>
+
+                    <p class="small mb-0">
+                        ¿Ya tienes una cuenta?
+                        <button type="button" (click)="isRegisterMode = false"
+                            class="btn btn-link p-0 fw-bold gold-link text-decoration-none">
+                            Iniciar sesión
+                        </button>
+                    </p>
+                </form>
+
+                <p class="modal-footer-text-figma mt-4">
+                    Al continuar, aceptas los
+                    <a href="#" class="gold-link text-decoration-none">Términos de uso</a>
+                    y la
+                    <a href="#" class="gold-link text-decoration-none">Política de privacidad.</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL REGISTRO DE ARTÍCULOS -->
+<!-- ========================================== -->
+<div id="customArticleModal" class="custom-modal-overlay" *ngIf="isArticleModalOpen">
     <div class="custom-modal-dialog">
         <div class="modal-content border-0 rounded-4 p-3 modal-figma-bg shadow-lg position-relative">
 
@@ -467,10 +417,8 @@
 
                 <!-- FORMULARIO DE NUEVO ARTÍCULO -->
                 <form (ngSubmit)="onAddArticle()" class="text-start">
-
                     <div class="mb-3">
-                        <label class="form-label fw-bold small">Título del artículo <span
-                                class="text-danger">*</span></label>
+                        <label class="form-label fw-bold small">Título del artículo <span class="text-danger">*</span></label>
                         <input type="text" [(ngModel)]="newArticle.title" name="title"
                             class="form-control form-control-figma rounded-pill shadow-none"
                             placeholder="Ej: iPhone 15 Pro, Libro de Cálculo..." required>
@@ -478,8 +426,7 @@
 
                     <div class="row g-3 mb-3">
                         <div class="col-12 col-md-6">
-                            <label class="form-label fw-bold small">Precio (S/) <span
-                                    class="text-danger">*</span></label>
+                            <label class="form-label fw-bold small">Precio (S/) <span class="text-danger">*</span></label>
                             <input type="number" step="0.01" [(ngModel)]="newArticle.price" name="price"
                                 class="form-control form-control-figma rounded-pill shadow-none"
                                 placeholder="Ej: 150.00" required>
@@ -502,16 +449,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold small">Estado del artículo <span
-                                class="text-danger">*</span></label>
+                        <label class="form-label fw-bold small">Estado del artículo <span class="text-danger">*</span></label>
                         <input type="text" [(ngModel)]="newArticle.subtitle" name="subtitle"
                             class="form-control form-control-figma rounded-pill shadow-none"
                             placeholder="Ej: Como nuevo, Buen estado..." required>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold small">URL de la Imagen <span
-                                class="text-danger">*</span></label>
+                        <label class="form-label fw-bold small">URL de la Imagen <span class="text-danger">*</span></label>
                         <input type="url" [(ngModel)]="newArticle.image" name="image"
                             class="form-control form-control-figma rounded-pill shadow-none"
                             placeholder="https://ejemplo.com/imagen.jpg" required>

@@ -1,16 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; // Si usas ngModel en tus formularios
+import { HeaderComponent } from '../header/header.component'; // <--- 1. Importa tu header aquí (revisa que la ruta sea correcta)
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    HeaderComponent // <--- 2. Agrégalo aquí en los imports
+  ],
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
+
 export class InicioComponent implements OnInit {
-  
+  // Asegúrate de tener tu variable declarada:
+  isAuthModalOpen: boolean = false;
+
+  // Agrega esta función si no la tienes:
+  abrirModal() {
+    this.isAuthModalOpen = true;
+  }
   // Modos de vista y modales
   isRegisterMode: boolean = false;
   isArticleModalOpen: boolean = false;
