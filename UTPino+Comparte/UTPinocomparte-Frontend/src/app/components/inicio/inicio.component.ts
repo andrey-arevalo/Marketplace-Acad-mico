@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../header/header.component'; 
-import { AuthModalComponent } from '../../pages/authmodal/authmodal'; // <--- 1. Importa tu AuthModal aquí (ajusta la ruta si es necesario)
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
   imports: [
     CommonModule, 
-    FormsModule, 
-    HeaderComponent,
-    AuthModalComponent
+    FormsModule
   ],
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
