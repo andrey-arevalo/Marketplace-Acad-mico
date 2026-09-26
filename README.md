@@ -1,41 +1,52 @@
-CAMBIO DEL 24/09/2026 01:53 A.M.
-📋 Estado Actual del Backend y Base de Datos (Para el Grupo)
-Hemos finalizado con éxito la integración del sistema de autenticación de la aplicación utilizando Angular, PHP (PDO), XAMPP y MySQL.
+🚀 Guía de Configuración Local - UTPINO COMPARTE
+¡Hola equipo! Sigan estos pasos al pie de la letra para configurar y probar el proyecto en sus computadoras locales.
 
-1. Estructura de la Base de Datos (utpino_comparte)
-La tabla principal encargada de gestionar a los usuarios se llama usuario y cuenta con la siguiente estructura:
+🛠️ 1. Prerrequisitos (Herramientas necesarias)
+Asegúrense de tener instalado en su PC:
 
-usuarioid: INT (Clave primaria, autoincremental).
+Node.js (versión recomendada LTS para Angular).
 
-nom_us: VARCHAR(100) (Nombre del usuario).
+XAMPP (para correr Apache y MySQL).
 
-correo: VARCHAR(150) (Correo institucional, único).
+📂 2. Configuración del Backend y Base de Datos (PHP / MySQL)
+Iniciar Servicios: Abran el panel de control de XAMPP y enciendan Apache y MySQL.
 
-contrasena: VARCHAR(255) (Almacena la contraseña del usuario en texto plano para facilitar las pruebas actuales).
+Crear la Base de Datos:
 
-fech_registro: TIMESTAMP (Fecha y hora automática de registro).
+Entren a phpMyAdmin.
 
-estado: VARCHAR(20) (Por defecto 'activo').
+Creen una nueva base de datos (pueden llamarla utpino_db).
 
-ultim_acces: DATETIME (Registro del último inicio de sesión).
+Importar la Tabla:
 
-2. Endpoints y Lógica del Backend (PHP en XAMPP)
-Los archivos se encuentran en la ruta del servidor local (htdocs/utpino-backend/) y devuelven respuestas estrictamente en formato JSON con cabeceras CORS configuradas para comunicarse con Angular:
+Seleccionen su base de datos creada, vayan a la pestaña Importar, suban el archivo .sql del proyecto (o ejecuten el script de la tabla usuario) y denle a Continuar.
 
-registro.php (Método POST):
+Ubicar el Backend:
 
-Recibe un objeto JSON con: { nombre, correo, password }.
+Copien la carpeta del backend PHP dentro de la ruta de XAMPP: C:/xampp/htdocs/ (en Windows).
 
-Valida que los campos no estén vacíos y que el correo no esté duplicado en la base de datos.
+Verificar Conexión:
 
-Inserta los datos mapeados en las columnas nom_us, correo y contrasena.
+Revisen el archivo conexion.php y asegúrense de que los accesos por defecto estén así:
 
-login.php (Método POST):
+Host: localhost
 
-Recibe un objeto JSON con: { correo, password }.
+Usuario: root
 
-Busca al usuario por su correo electrónico en la base de datos.
+Contraseña: (vacía)
 
-Realiza una validación directa en texto plano (===) contra la columna contrasena.
+Base de datos: utpino_db (o el nombre que le hayan puesto).
 
-Devuelve una respuesta con success: true/false, un mensaje descriptivo y el nombre del usuario (nom_us) si el inicio de sesión es exitoso.
+💻 3. Configuración del Frontend (Angular)
+Abrir el Proyecto: Abran la carpeta del frontend en su editor de código (como Visual Studio Code).
+
+Instalar Dependencias: Abran la terminal integrada de VS Code y ejecuten el siguiente comando para descargar los módulos necesarios:
+
+Bash
+npm install
+(Nota: No se preocupen por los archivos temporales o de caché como .tsbuildinfo si aparecen en su control de versiones; Git los ignorará automáticamente).
+
+Verificar la ruta del Backend:
+
+Asegúrense de que en sus servicios de Angular (por ejemplo, en auth.service.ts), la URL apunte correctamente a su servidor local de XAMPP, algo como:
+http://localhost/utpino-backend/
