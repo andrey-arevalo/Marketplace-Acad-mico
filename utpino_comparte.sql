@@ -10,8 +10,10 @@ CREATE TABLE usuario (
     contrasena VARCHAR(255) NOT NULL,
     fech_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(20) DEFAULT 'activo',
-    ultim_acces DATETIME DEFAULT NULL
+    ultim_acces DATETIME DEFAULT NULL,
+    foto VARCHAR(255) DEFAULT NULL
 );
+SELECT * FROM usuario;
 
 -- 2. Tabla CATEGORIA_PROD
 CREATE TABLE categoria_prod (

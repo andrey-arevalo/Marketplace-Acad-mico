@@ -18,7 +18,7 @@
                 <p class="modal-desc-figma small mb-4">Regístrate con tu correo institucional UTP.</p>
 
                 <!-- FORMULARIO DE REGISTRO -->
-                <form (ngSubmit)="onRegister()">
+                <form (ngSubmit)="onRegistro()">
                     <div class="mb-3 text-start">
                         <label class="form-label fw-bold small">Nombre completo</label>
                         <input type="text" [(ngModel)]="registerName" name="registerName"
@@ -46,7 +46,10 @@
                             </button>
                         </div>
                     </div>
-
+                    <div class="mb-3">
+                        <label for="fotoPerfil" class="form-label">Foto de perfil (Opcional)</label>
+                        <input type="file" class="form-control" id="fotoPerfil" (change)="onFileSelected($event)" accept="image/*">
+                    </div>
                     <div class="mb-3 text-start">
                         <label class="form-label fw-bold small">Confirmar contraseña</label>
                         <div class="position-relative">

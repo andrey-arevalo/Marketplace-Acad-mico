@@ -1,23 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // URLs para tus archivos PHP en XAMPP
-  private apiUrlRegistro = 'http://localhost/utpino-backend/registro.php';
-  private apiUrlLogin = 'http://localhost/utpino-backend/login.php'; // Cambia esto si usas el mismo archivo
+  private apiUrl = 'http://localhost/utpino-backend/'; // Ajusta tu URL si es diferente
 
-  constructor(private http: HttpClient) { }
+  // BehaviorSubject para notificar cambios de sesión en tiempo real
+  private usuarioSubject = new BehaviorSubject<{ nombre: string | null, foto: string | null }>({
+    nombre: localStorage.getItem('usuario'),
+    foto: localStorage.getItem('foto_usuario')
+  });
 
-  registrarUsuario(datos: { nombre: string, correo: string, password: string }): Observable<any> {
-    return this.http.post<any>(this.apiUrlRegistro, datos);
+  public usuario$ = this.usuarioSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  iniciarSesion(credenciales: any): Observable<any> {
+    return this.http.post(this.apiUrl + 'login.php', credenciales);
   }
 
-  // Agrega este método para que coincida con tu componente
-  iniciarSesion(credenciales: { correo: string, password: string }): Observable<any> {
-    return this.http.post<any>(this.apiUrlLogin, credenciales);
+  // Método para actualizar el estado global al iniciar sesión
+  actualizarSesion(nombre: string, foto: string | null) {
+    localStorage.setItem('usuario', nombre);
+    if (foto) {
+      localStorage.setItem('foto_usuario', foto);
+    } else {
+      localStorage.removeItem('foto_usuario');
+    }
+    this.usuarioSubject.next({ nombre, foto });
+  }
+
+  // Método para cerrar sesión limpiando el estado
+  cerrarSesion() {
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('foto_usuario');
+    this.usuarioSubject.next({ nombre: null, foto: null });
+  }
+    // Acepta tanto un objeto normal como un FormData (cuando incluye archivos)
+  registrarUsuario(userData: FormData | any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/registro.php`, userData, { responseType: 'text' });
   }
 }

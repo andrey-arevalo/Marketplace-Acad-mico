@@ -19,8 +19,19 @@ export class RegistroComponent {
   registerMessage: string = '';
   showRegisterPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  
+  // Variable para almacenar el archivo de la foto seleccionado
+  selectedFile: File | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
+
+  // Método que captura la imagen seleccionada por el usuario
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
 
   onRegistro() {
     this.registerMessage = '';
@@ -37,13 +48,18 @@ export class RegistroComponent {
       return;
     }
 
-    const datosRegistro = {
-      nombre: this.registerName,
-      correo: this.registerEmail,
-      password: this.registerPassword
-    };
+    // Creamos un FormData para enviar texto y archivos simultáneamente
+    const formData = new FormData();
+    formData.append('nombre', this.registerName);
+    formData.append('correo', this.registerEmail); // Nota: mantenemos 'correo' tal como lo usabas antes
+    formData.append('password', this.registerPassword);
 
-    this.authService.registrarUsuario(datosRegistro).subscribe({
+    // Si el usuario seleccionó una foto, la adjuntamos al FormData
+    if (this.selectedFile) {
+      formData.append('foto', this.selectedFile);
+    }
+
+    this.authService.registrarUsuario(formData).subscribe({
       next: (respuestaCruda: any) => {
         try {
           const response = typeof respuestaCruda === 'string' ? JSON.parse(respuestaCruda) : respuestaCruda;

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Si usas ngModel en tus formularios
-import { HeaderComponent } from '../header/header.component'; // <--- 1. Importa tu header aquí (revisa que la ruta sea correcta)
+import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../header/header.component'; 
+import { AuthModalComponent } from '../../pages/authmodal/authmodal'; // <--- 1. Importa tu AuthModal aquí (ajusta la ruta si es necesario)
 
 @Component({
   selector: 'app-inicio',
@@ -9,20 +10,18 @@ import { HeaderComponent } from '../header/header.component'; // <--- 1. Importa
   imports: [
     CommonModule, 
     FormsModule, 
-    HeaderComponent // <--- 2. Agrégalo aquí en los imports
+    HeaderComponent,
+    AuthModalComponent
   ],
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
 
 export class InicioComponent implements OnInit {
-  // Asegúrate de tener tu variable declarada:
+  // Control de visibilidad y estado de sesión
   isAuthModalOpen: boolean = false;
+  usuarioLogueado: string | null = null;
 
-  // Agrega esta función si no la tienes:
-  abrirModal() {
-    this.isAuthModalOpen = true;
-  }
   // Modos de vista y modales
   isRegisterMode: boolean = false;
   isArticleModalOpen: boolean = false;
@@ -111,12 +110,29 @@ export class InicioComponent implements OnInit {
     image: ''
   };
 
-  // Inicialización de filtros al cargar el componente
+  // Inicialización al cargar el componente
   ngOnInit() {
     this.applyFilters();
+    // Verificamos si hay una sesión activa guardada
+    this.usuarioLogueado = localStorage.getItem('usuario');
   }
 
-  // Métodos de autenticación y modales
+  // --- MÉTODOS DE MODAL Y AUTENTICACIÓN CORREGIDOS ---
+  
+  // Abre el modal de autenticación
+  abrirModal() {
+    this.isAuthModalOpen = true;
+  }
+
+  openAuthModal() {
+    this.isAuthModalOpen = true;
+  }
+
+  // Cierra el modal
+  cerrarModal() {
+    this.isAuthModalOpen = false;
+  }
+
   onLogin() {
     console.log('Iniciando sesión...', this.loginEmail);
   }
@@ -125,15 +141,8 @@ export class InicioComponent implements OnInit {
     console.log('Registrando...', this.registerEmail);
   }
 
-  openAuthModal() {
-    // Lógica para abrir modal
-  }
-
   onAddArticle() {
     console.log('Agregando artículo...', this.newArticle);
-    // Opcional: puedes agregarlo directamente a la lista local si gustas
-    // this.items.unshift({ ...this.newArticle, isFavorite: false });
-    // this.applyFilters();
   }
 
   // Métodos de filtrado

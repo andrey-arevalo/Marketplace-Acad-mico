@@ -39,20 +39,25 @@ export class LoginComponent {
           const response = typeof respuestaCruda === 'string' ? JSON.parse(respuestaCruda) : respuestaCruda;
           
           if (response.success) {
-            localStorage.setItem('usuario', response.usuario);
-            alert(response.message || '¡Inicio de sesión exitoso!');
-            this.router.navigate(['/dashboard']); 
+            const nombreReal = response.nom_us;
+            const fotoReal = response.foto ? 'http://localhost/utpino-backend/' + response.foto : null;
+
+            // Actualizamos la sesión globalmente a través del servicio (actualiza el header al instante)
+            this.authService.actualizarSesion(nombreReal, fotoReal);
+
+            alert(response.message);
+            this.router.navigate(['/inicio']); // Redirige al inicio
           } else {
-            this.loginMessage = response.message || 'Correo o contraseña incorrectos.';
+            this.loginMessage = response.message || 'Credenciales incorrectas.';
           }
         } catch (e) {
-          console.error('Error al parsear JSON en login:', respuestaCruda);
-          this.loginMessage = 'El servidor PHP devolvió un formato no válido.';
+          console.error('Error al parsear JSON:', respuestaCruda);
+          this.loginMessage = 'Error en la respuesta del servidor.';
         }
       },
       error: (err) => {
-        console.error('Error de red en login:', err);
-        this.loginMessage = 'No se pudo conectar con el servidor PHP en XAMPP.';
+        console.error('Error de red:', err);
+        this.loginMessage = 'Error de conexión con el servidor.';
       }
     });
   }
