@@ -1,16 +1,18 @@
 /* Fondo oscuro translúcido que cubre toda la pantalla */
+/* Fondo desenfocado y translúcido para el modal de autenticación personalizado */
 .custom-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(30, 35, 30, 0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1050;
-  backdrop-filter: blur(4px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
 }
 
 /* Contenedor principal de la tarjeta modal */
@@ -115,4 +117,12 @@
   font-size: 0.71rem;
   color: #8c8c8c;
   line-height: 1.4;
+}
+
+/* Efecto de desenfoque permitiendo ver el contenido de inicio con claridad */
+.modal-backdrop.show {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px); /* Soporte para Safari */
+    background-color: rgba(0, 0, 0, 0.2); /* Un tono oscuro muy ligero, o usa rgba(252, 244, 238, 0.4) para un tinte crema */
+    opacity: 1 !important;
 }

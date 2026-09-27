@@ -50,7 +50,7 @@ export class InicioComponent implements OnInit {
       oldPrice: 'S/ 2,800',
       category: 'electronica',
       type: 'venta',
-      image: '/imgs/Iphone.webp',
+      image: 'assets/imgs/Iphone.webp',
       isFavorite: false
     },
     {
@@ -60,7 +60,7 @@ export class InicioComponent implements OnInit {
       oldPrice: null,
       category: 'deportes',
       type: 'venta',
-      image: '/imgs/Bicicleta.jpeg',
+      image: 'assets/imgs/Bicicleta.jpeg',
       isFavorite: false
     },
     {
@@ -70,7 +70,7 @@ export class InicioComponent implements OnInit {
       oldPrice: null,
       category: 'libros',
       type: 'intercambio',
-      image: '/imgs/LibroHTML,CSS,JS.jpeg',
+      image: 'assets/imgs/LibroHTML,CSS,JS.jpeg',
       isFavorite: false
     },
     {
@@ -80,7 +80,7 @@ export class InicioComponent implements OnInit {
       oldPrice: 'S/ 4,500',
       category: 'electronica',
       type: 'venta',
-      image: '/imgs/Mackbook.jpeg',
+      image: 'assets/imgs/Mackbook.jpeg',
       isFavorite: false
     },
     {
@@ -90,7 +90,7 @@ export class InicioComponent implements OnInit {
       oldPrice: 'S/ 200',
       category: 'electronica',
       type: 'venta',
-      image: '/imgs/PlumaEstiloGrafica.jpg',
+      image: 'assets/imgs/PlumaEstiloGrafica.jpg',
       isFavorite: false
     }
   ];
