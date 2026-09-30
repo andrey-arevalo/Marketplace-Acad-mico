@@ -10,7 +10,8 @@ import { ProductService, Producto } from '../../service/product.service';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    ProductCardComponent
   ],
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
