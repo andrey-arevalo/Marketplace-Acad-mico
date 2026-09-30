@@ -1,13 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-perfil', // (o el nombre que corresponda)
+  selector: 'app-profile',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './perfil.html', // o el nombre de su respectivo html
-  styleUrls: ['./perfil.css']
+  templateUrl: './perfil.html',
+  styleUrl: './perfil.css'
 })
-export class PerfilComponent {
-  // Lógica del componente
+export class PerfilComponent implements OnInit {
+  usuario: any = {
+    nombre: 'Estudiante UTP',
+    carrera: 'Ingeniería',
+    ciclo: 8,
+    articulosActivos: 0,
+    reputacion: 5.0,
+    avatar: 'Avatar-perfil-prueba.jpeg'
+  };
+
+  ngOnInit(): void {}
 }
