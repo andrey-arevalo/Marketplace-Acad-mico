@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginComponent } from './pages/login/login';
 import { RegistroComponent } from './pages/registro/registro';
@@ -9,24 +10,50 @@ import { PublicacionProductComponent } from './pages/publicacion-product/publica
 import { AuthModalComponent } from './pages/authmodal/authmodal';
 
 export const routes: Routes = [
-  // Ruta por defecto (Página principal / Home)
-  { path: '', component: InicioComponent },
 
-  // Autenticación y Modales
-  { path: 'auth', component: AuthModalComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegistroComponent },
+  {
+    path: '',
+    component: InicioComponent
+  },
 
-  // Usuario y perfil
-  { path: 'perfil', component: PerfilComponent },
+  {
+    path: 'auth',
+    component: AuthModalComponent
+  },
 
-  // Comunicación
-  { path: 'chat', component: ChatComponent },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
 
-  // Gestión y vista de productos
-  { path: 'producto/:id', component: DetailProductComponent },
-  { path: 'publicar', component: PublicacionProductComponent },
+  {
+    path: 'registro',
+    component: RegistroComponent
+  },
 
-  // Comodín para rutas no encontradas (SIEMPRE AL FINAL)
-  { path: '**', redirectTo: '' }
+  {
+    path: 'perfil',
+    component: PerfilComponent
+  },
+
+  {
+    path: 'chat',
+    component: ChatComponent
+  },
+
+  {
+    path: 'producto/:id',
+    component: DetailProductComponent
+  },
+
+  {
+    path: 'publicar',
+    component: PublicacionProductComponent
+  },
+
+  {
+    path: '**',
+    redirectTo: ''
+  }
+
 ];
