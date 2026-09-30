@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
   selector: 'app-profile',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './profile.html',
-  styleUrl: './profile.css'
+  templateUrl: './perfil.html',
+  styleUrl: './perfil.css'
 })
-export class ProfileComponent implements OnInit {
+export class PerfilComponent implements OnInit {
   usuario: any = {
     nombre: 'Estudiante UTP',
     carrera: 'Ingeniería',
