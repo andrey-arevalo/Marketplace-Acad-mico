@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ProductService, Producto } from '../../service/product.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
 
 @Component({
   selector: 'app-inicio',
