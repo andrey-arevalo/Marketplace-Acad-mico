@@ -287,27 +287,20 @@
   <!-- ========================================= -->
 
   <div
-    *ngIf="!loading && filteredProductos.length > 0"
-    class="row g-4">
+  *ngIf="!loading && filteredProductos.length > 0"
+  class="row g-4">
 
-    <div
-      *ngFor="let producto of filteredProductos"
-      class="col-12 col-sm-6 col-lg-3">
+  <div
+    *ngFor="let producto of filteredProductos"
+    class="col-12 col-sm-6 col-lg-3">
 
-      <div
-        class="card border-0 shadow-sm rounded-4 h-100 product-card">
+    <app-product-card
+      [product]="producto">
+    </app-product-card>
 
-        <!-- IMAGEN -->
+  </div>
 
-        <div class="product-image-container">
-
-          <img
-            [src]="producto.img_prod || 'assets/imgs/placeholder.png'"
-            [alt]="producto.nom_prod"
-            class="product-image"
-            onerror="this.src='assets/imgs/placeholder.png'">
-
-        </div>
+</div>
 
 
         <!-- INFORMACIÓN -->
