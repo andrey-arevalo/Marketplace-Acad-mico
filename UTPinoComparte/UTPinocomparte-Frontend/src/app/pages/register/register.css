@@ -23,11 +23,12 @@
     width: 100%;
     max-width: 460px;
     background-color: #FDF9F5 !important; /* Color crema suave del diseño original */
-    border-radius: 20px !important;       /* Curva de las esquinas idéntica al Figma */
+    border-radius: 20px !important;      /* Curva de las esquinas idéntica al Figma */
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); /* Sombra flotante profunda */
     z-index: 10000;
-    padding: 32px 24px;
+    padding: 24px 20px;
     position: relative;
+    animation: scaleIn 0.3s ease-in-out;
 }
 
 /* Animación de escala para la aparición del modal */
@@ -45,8 +46,8 @@
 
 /* Fondo y colores principales adaptados dentro de la caja del modal */
 .modal-figma-bg {
-    background-color: var(--card-bg) !important;
-    color: var(--text-main) !important;
+    background-color: var(--card-bg, #FDF9F5) !important;
+    color: var(--text-main, #1a3322) !important;
 }
 
 /* Dimensiones y ajuste para el logotipo interior del modal */
@@ -58,45 +59,61 @@
 
 /* Título principal dentro de la ventana de autenticación */
 .modal-title-figma {
-    color: var(--text-main) !important;
+    color: var(--text-main, #1a3322) !important;
 }
 
 /* Párrafo descriptivo dentro de la ventana modal */
 .modal-desc-figma {
-    color: var(--text-main) !important;
+    color: var(--text-main, #1a3322) !important;
     opacity: 0.7;
 }
 
-/* Botones de inicio de sesión social (Google / Microsoft) */
-.social-btn-figma {
-    background-color: var(--bg-main) !important;
-    border: 1px solid var(--border-color) !important;
-    color: var(--text-main) !important;
+/* Inputs de formulario adaptados a tu paleta */
+.form-control-figma {
+    background-color: #ffffff !important;
+    border: 1px solid var(--border-color, #dcd3c1) !important;
+    color: var(--text-main, #1a3322) !important;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
 }
 
-/* Botón alternativo para continuar con correo institucional */
-.inst-btn-figma {
-    background-color: transparent !important;
-    border: 1px dashed var(--border-color) !important;
-    color: var(--text-main) !important;
+.form-control-figma:focus {
+    border-color: #b5762a !important;
+    box-shadow: none !important;
 }
 
-/* Línea divisoria central con texto separador "o" */
-.divider-line-figma {
-    border-bottom: 1px solid var(--border-color);
-    height: 10px;
+/* Tarjeta contenedora de la foto de perfil */
+.photo-card-figma {
+    background-color: rgba(181, 118, 42, 0.05) !important;
+    border: 1px dashed var(--border-color, #dcd3c1);
 }
 
-/* Texto central que acompaña a la línea divisoria del modal */
-.divider-text-figma {
-    background-color: var(--card-bg) !important;
-    color: var(--text-main);
-    opacity: 0.6;
+/* Botón principal color dorado/mostaza de la paleta */
+.gold-main-btn {
+    background-color: #b5762a !important;
+    border: none !important;
+    color: #ffffff !important;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.gold-main-btn:hover {
+    background-color: #965f1f !important;
+    color: #ffffff !important;
+}
+
+/* Enlaces secundarios */
+.gold-link {
+    color: #2c5e3b;
+}
+
+.gold-link:hover {
+    color: #1a3322;
+    text-decoration: underline !important;
 }
 
 /* Texto de términos y condiciones en la parte inferior del modal */
 .modal-footer-text-figma {
     font-size: 0.75rem;
-    color: var(--text-main);
+    color: var(--text-main, #1a3322);
     opacity: 0.7;
 }

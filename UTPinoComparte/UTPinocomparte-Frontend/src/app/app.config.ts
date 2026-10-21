@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-import { routes } from './app.routes'; // Asegúrate de que el archivo app.routes.ts esté al lado
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [

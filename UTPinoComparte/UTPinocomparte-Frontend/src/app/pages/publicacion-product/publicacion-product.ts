@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import {
   ProductService,
   ProductoPayload
-} from '../../service/product.service';
+} from '../../services/product.service';
 
 @Component({
   selector: 'app-publicacionproduct',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Necesario para ngModel en el input de texto
-import { ChatService, Mensaje } from '../../service/chat.service';
+import { ChatService, Mensaje } from '../../services/chat.service';
 
 @Component({
   selector: 'app-chat',

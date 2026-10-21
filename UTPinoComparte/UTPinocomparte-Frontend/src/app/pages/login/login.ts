@@ -1,63 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class LoginComponent {
-  loginEmail: string = '';
-  loginPassword: string = '';
-  loginMessage: string = '';
-  showLoginPassword: boolean = false;
+  // Variables que enlazan con el HTML (login.html)
+  loginEmail = '';
+  loginPassword = '';
+  loginMessage = '';
+  
+  showLoginPassword = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   onLogin() {
-    this.loginMessage = '';
-
-    // Validar campos vacíos
-    if (!this.loginEmail || !this.loginPassword) {
-      this.loginMessage = 'Por favor, completa todos los campos.';
-      return;
-    }
-
-    const datosLogin = {
+    const credentials = {
       correo: this.loginEmail,
-      password: this.loginPassword
+      contrasena: this.loginPassword
     };
 
-    this.authService.iniciarSesion(datosLogin).subscribe({
-      next: (respuestaCruda: any) => {
-        try {
-          const response = typeof respuestaCruda === 'string' ? JSON.parse(respuestaCruda) : respuestaCruda;
-          
-          if (response.success) {
-            const nombreReal = response.nom_us;
-            const fotoReal = response.foto ? 'http://localhost/utpino-backend/' + response.foto : null;
+    this.authService.login(credentials).subscribe({
+      next: (response: any) => {
+        console.log('Login exitoso:', response);
+        
+        // 🔑 Guardamos de forma segura buscando tanto en response.user como en la respuesta general
+        const token = response.token;
+        const usuario = response.user || response;
 
-            // Actualizamos la sesión globalmente a través del servicio (actualiza el header al instante)
-            this.authService.actualizarSesion(nombreReal, fotoReal);
+        this.authService.saveSession(token, usuario);
 
-            alert(response.message);
-            this.router.navigate(['/inicio']); // Redirige al inicio
-          } else {
-            this.loginMessage = response.message || 'Credenciales incorrectas.';
-          }
-        } catch (e) {
-          console.error('Error al parsear JSON:', respuestaCruda);
-          this.loginMessage = 'Error en la respuesta del servidor.';
-        }
+        // Redirigimos al inicio de inmediato para que el header reaccione
+        this.router.navigate(['/inicio']);
       },
       error: (err) => {
-        console.error('Error de red:', err);
-        this.loginMessage = 'Error de conexión con el servidor.';
+        console.error('Error en el login', err);
+        this.loginMessage = err.error?.message || 'Credenciales incorrectas.';
       }
     });
   }

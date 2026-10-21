@@ -20,28 +20,39 @@
                 <!-- LÍNEA SEPARADORA SUPERIOR SUTIL -->
                 <hr class="text-muted opacity-25 mb-3">
 
-                <!-- BOTÓN GOOGLE -->
-                <button type="button" (click)="loginConGoogle()" class="btn w-100 py-2 mb-2 social-btn-figma d-flex align-items-center justify-content-center shadow-sm">
-                    <i class="fa-brands fa-google text-danger me-2 fs-5"></i> Continuar con Google
+                <!-- BOTÓN MICROSOFT (Listo para programar después) -->
+                <button type="button" (click)="loginConMicrosoft()" class="btn w-100 py-2 mb-2 social-btn-figma d-flex align-items-center justify-content-center shadow-sm">
+                    <i class="fa-brands fa-microsoft text-primary me-2 fs-5"></i> Continuar con cuenta de Microsoft
                 </button>
 
-                <!-- BOTÓN MICROSOFT -->
-                <button type="button" (click)="loginConMicrosoft()" class="btn w-100 py-2 mb-3 social-btn-figma d-flex align-items-center justify-content-center shadow-sm">
-                    <i class="fa-brands fa-microsoft text-primary me-2 fs-5"></i> Continuar con Microsoft
-                </button>
-
-                <!-- SEPARADOR CON LA 'o' AL CENTRO -->
-                <div class="divider-with-o">
-                    <span>o</span>
+                <!-- SEPARADOR: o regístrate -->
+                <div class="position-relative my-3">
+                    <hr class="text-muted opacity-25">
+                    <span class="position-absolute top-50 start-50 translate-middle px-2 bg-white text-muted small" style="background-color: #fcf8f2 !important;">
+                        o regístrate
+                    </span>
                 </div>
 
-                <!-- BOTÓN CORREO INSTITUCIONAL -->
-                <button type="button" routerLink="/login" class="btn w-100 py-2 gold-outline-btn mb-3">
+                <!-- BOTÓN CORREO INSTITUCIONAL (Va al Registro) -->
+                <button type="button" routerLink="/register" class="btn w-100 py-2 gold-outline-btn mb-3" style="border-style: dashed !important;">
                     Continuar con correo institucional
                 </button>
 
+                <!-- SEPARADOR: ¿ya tienes cuenta? -->
+                <div class="position-relative my-3">
+                    <hr class="text-muted opacity-25">
+                    <span class="position-absolute top-50 start-50 translate-middle px-2 text-muted small" style="background-color: #fcf8f2 !important;">
+                        ¿ya tienes cuenta?
+                    </span>
+                </div>
+
+                <!-- BOTÓN INICIAR SESIÓN (Va al Login) -->
+                <button type="button" routerLink="/login" class="btn w-100 py-2 gold-main-btn mb-3 fw-bold">
+                    Iniciar sesión
+                </button>
+
                 <!-- TÉRMINOS Y CONDICIONES -->
-                <div class="text-muted terms-text">
+                <div class="text-muted terms-text small">
                     Al continuar, aceptas los <a href="#" class="gold-link text-decoration-none">Términos de uso</a> y la <a href="#" class="gold-link text-decoration-none">Política de privacidad</a> de UTPINO COMPARTE.
                 </div>
             </div>

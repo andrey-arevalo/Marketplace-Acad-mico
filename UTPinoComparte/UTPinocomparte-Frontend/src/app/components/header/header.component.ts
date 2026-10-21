@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../services/auth.service';
 
 declare var bootstrap: any; // Permite controlar los modales de Bootstrap mediante JS
 
@@ -10,7 +10,7 @@ declare var bootstrap: any; // Permite controlar los modales de Bootstrap median
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   usuarioLogueado: string | null = null;
@@ -20,14 +20,31 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // Nos suscribimos al observable para escuchar cambios de sesión en tiempo real
-    this.authService.usuario$.subscribe(data => {
-      this.usuarioLogueado = data.nombre;
-      this.fotoUsuario = data.foto;
-      
-      if (this.usuarioLogueado) {
-        this.inicialUsuario = this.usuarioLogueado.charAt(0).toUpperCase();
+    // Nos suscribimos al observable escuchando múltiples variantes de campos de Laravel
+    this.authService.usuario$.subscribe((data: any) => {
+      console.log('Datos del usuario en el Header:', data);
+
+      // Detecta nombre en español, inglés o en tu campo personalizado de base de datos
+      const nombreUsuario = data?.nombre || data?.name || data?.nom_us;
+      const rawFoto = data?.foto || data?.avatar || data?.img_us;
+
+      if (data && nombreUsuario) {
+        this.usuarioLogueado = nombreUsuario;
+        this.inicialUsuario = (nombreUsuario as string).charAt(0).toUpperCase();
+
+        // 🔑 AQUÍ CONSTRUIMOS LA RUTA DE LA FOTO CORRECTAMENTE:
+        if (rawFoto) {
+          // Si ya viene con http/https lo dejamos igual, si no, le pegamos la URL del servidor Laravel
+          this.fotoUsuario = rawFoto.startsWith('http') 
+            ? rawFoto 
+            : `http://127.0.0.1:8000/storage/${rawFoto}`;
+        } else {
+          this.fotoUsuario = null;
+        }
+
       } else {
+        this.usuarioLogueado = null;
+        this.fotoUsuario = null;
         this.inicialUsuario = '';
       }
     });
@@ -41,9 +58,7 @@ export class HeaderComponent implements OnInit {
 
   // Función que controla si abre el modal de publicar o pide iniciar sesión
   verificarAccesoPublicar() {
-    const usuarioActivo = localStorage.getItem('usuario');
-
-    if (usuarioActivo) {
+    if (this.usuarioLogueado) {
       // Si está logueado: Abre el modal de Bootstrap de forma dinámica
       const modalElement = document.getElementById('modalPublicar');
       if (modalElement) {
@@ -51,7 +66,7 @@ export class HeaderComponent implements OnInit {
         myModal.show();
       }
     } else {
-      // Si NO está logueado: Alerta y redirección al auth
+      // Si NO está logueado: Alerta y redirección a la pantalla de bienvenida/login
       alert('Por favor, inicia sesión para poder publicar un artículo.');
       this.router.navigate(['/auth']); 
     }

@@ -15,7 +15,7 @@
                 </div>
 
                 <h4 class="fw-bold modal-title-figma mb-2">Iniciar Sesión</h4>
-                <p class="modal-desc-figma small mb-4">Ingresa tus credenciales institucionales UTP.</p>
+                <p class="modal-desc-figma small mb-4">Ingresa a tu cuenta de UTPinoComparte.</p>
 
                 <!-- FORMULARIO DE LOGIN -->
                 <form (ngSubmit)="onLogin()">
@@ -32,7 +32,7 @@
                             <input [type]="showLoginPassword ? 'text' : 'password'" [(ngModel)]="loginPassword"
                                 name="loginPassword"
                                 class="form-control form-control-figma rounded-pill shadow-none pe-5"
-                                placeholder="Ingresa tu contraseña" required>
+                                placeholder="******" required>
                             <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0 bg-transparent"
                                 (click)="showLoginPassword = !showLoginPassword">
                                 <i class="fa-solid" [ngClass]="showLoginPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
@@ -40,18 +40,20 @@
                         </div>
                     </div>
 
-                    <div class="small mb-3 text-danger" *ngIf="loginMessage">{{ loginMessage }}</div>
+                    <div *ngIf="loginMessage" class="alert-message text-danger text-center mb-3 fw-bold small">
+                        {{ loginMessage }}
+                    </div>
 
                     <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
-                        Iniciar sesión
+                        Ingresar
                     </button>
 
                     <div class="d-flex justify-content-between small">
                         <button type="button" routerLink="/inicio" class="btn btn-link p-0 text-muted text-decoration-none">
                             <i class="fa-solid fa-arrow-left me-1"></i> Volver
                         </button>
-                        <a routerLink="/registro" class="fw-bold gold-link text-decoration-none">
-                            Crear cuenta
+                        <a routerLink="/register" class="fw-bold gold-link text-decoration-none">
+                            ¿No tienes cuenta? Regístrate
                         </a>
                     </div>
                 </form>

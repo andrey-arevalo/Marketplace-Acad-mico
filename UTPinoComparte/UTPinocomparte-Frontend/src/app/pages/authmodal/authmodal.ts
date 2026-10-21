@@ -7,7 +7,7 @@ import { Router, RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './authmodal.html',
-  styleUrl: './authmodal.css'
+  styleUrls: ['./authmodal.css'] // Asegúrate de que coincida con styleUrl o styleUrls según tu config
 })
 export class AuthModalComponent implements OnInit {
 
@@ -17,31 +17,14 @@ export class AuthModalComponent implements OnInit {
     console.log('¡ESTOY EN EL MODAL DE BIENVENIDA /AUTH!');
   }
 
-  // 1. Lógica para autenticación con Google
-  loginConGoogle() {
-    console.log('Redirigiendo a Google OAuth...');
-    
-    // Opción A: Redirección directa a un endpoint de tu backend PHP que maneje Google OAuth
-    // window.location.href = 'http://localhost/utpino-backend/auth_google.php';
-
-    // Opción B: Simulación interactiva funcional por ahora
-    const correoSimulado = 'usuario.google@utp.edu.pe';
-    localStorage.setItem('usuario', 'Google User');
-    alert(`¡Autenticación exitosa con Google!\nBienvenido: ${correoSimulado}`);
-    this.router.navigate(['/dashboard']);
-  }
-
-  // 2. Lógica para autenticación con Microsoft
+  // Lógica para autenticación con Microsoft (Lista para cuando la implementemos)
   loginConMicrosoft() {
     console.log('Redirigiendo a Microsoft Azure AD...');
     
-    // Opción A: Redirección directa a un endpoint de tu backend PHP que maneje Microsoft OAuth
-    // window.location.href = 'http://localhost/utpino-backend/auth_microsoft.php';
-
-    // Opción B: Simulación interactiva funcional por ahora
+    // Simulación interactiva funcional por ahora
     const correoSimulado = 'usuario.microsoft@utp.edu.pe';
     localStorage.setItem('usuario', 'Microsoft User');
     alert(`¡Autenticación exitosa con Microsoft!\nBienvenido: ${correoSimulado}`);
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/inicio']);
   }
 }

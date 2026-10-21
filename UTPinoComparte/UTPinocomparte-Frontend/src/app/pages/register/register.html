@@ -18,7 +18,8 @@
                 <p class="modal-desc-figma small mb-4">Regístrate con tu correo institucional UTP.</p>
 
                 <!-- FORMULARIO DE REGISTRO -->
-                <form (ngSubmit)="onRegistro()">
+                <form (ngSubmit)="onRegister()">
+                    <!-- Nombre Completo -->
                     <div class="mb-3 text-start">
                         <label class="form-label fw-bold small">Nombre completo</label>
                         <input type="text" [(ngModel)]="registerName" name="registerName"
@@ -26,6 +27,15 @@
                             placeholder="Ej. Juan Pérez" required>
                     </div>
 
+                    <!-- Código de Estudiante -->
+                    <div class="mb-3 text-start">
+                        <label class="form-label fw-bold small">Código de estudiante</label>
+                        <input type="text" [(ngModel)]="registerCodEst" name="registerCodEst"
+                            class="form-control form-control-figma rounded-pill shadow-none"
+                            placeholder="Ej. U24204556" required>
+                    </div>
+
+                    <!-- Correo institucional -->
                     <div class="mb-3 text-start">
                         <label class="form-label fw-bold small">Correo institucional</label>
                         <input type="email" [(ngModel)]="registerEmail" name="registerEmail"
@@ -33,6 +43,7 @@
                             placeholder="correo@utp.edu.pe" required>
                     </div>
 
+                    <!-- Contraseña -->
                     <div class="mb-3 text-start">
                         <label class="form-label fw-bold small">Contraseña</label>
                         <div class="position-relative">
@@ -46,10 +57,14 @@
                             </button>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="fotoPerfil" class="form-label">Foto de perfil (Opcional)</label>
-                        <input type="file" class="form-control" id="fotoPerfil" (change)="onFileSelected($event)" accept="image/*">
+
+                    <!-- Foto de Perfil (Opcional) -->
+                    <div class="mb-3 text-start">
+                        <label for="fotoPerfil" class="form-label fw-bold small">Foto de perfil (Opcional)</label>
+                        <input type="file" class="form-control form-control-figma rounded-pill shadow-none" id="fotoPerfil" (change)="onFileSelected($event)" accept="image/*">
                     </div>
+
+                    <!-- Confirmar Contraseña -->
                     <div class="mb-3 text-start">
                         <label class="form-label fw-bold small">Confirmar contraseña</label>
                         <div class="position-relative">
@@ -64,14 +79,17 @@
                         </div>
                     </div>
 
-                    <div *ngIf="registerMessage" class="alert-message" style="color: red; text-align: center; margin-bottom: 10px;">
-                     {{ registerMessage }}
+                    <!-- Mensaje de Alerta / Error -->
+                    <div *ngIf="registerMessage" class="alert-message text-danger text-center mb-3 fw-bold small">
+                        {{ registerMessage }}
                     </div>
 
-                    <button type="submit" (click)="onRegistro()" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
+                    <!-- Botón Enviar -->
+                    <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
                         Crear cuenta
                     </button>
 
+                    <!-- Enlaces Inferiores -->
                     <div class="d-flex justify-content-between small">
                         <button type="button" routerLink="/inicio" class="btn btn-link p-0 text-muted text-decoration-none">
                             <i class="fa-solid fa-arrow-left me-1"></i> Volver
