@@ -91,3 +91,6 @@ CREATE TABLE mensaje (
     CONSTRAINT fk_mensaje_conversacion FOREIGN KEY (conversacionid) REFERENCES conversacion(conversacionid),
     CONSTRAINT fk_mensaje_participante FOREIGN KEY (participanteid) REFERENCES participante(participanteid)
 );
+
+-- Confirmar que las tablas se crearon correctamente
+SHOW TABLES;
