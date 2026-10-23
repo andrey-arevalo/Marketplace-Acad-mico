@@ -1,5 +1,6 @@
 export interface User {
     usuarioid: number;
+    cod_est: string;
     nom_us: string;
     correo: string;
     contrasena: string;
