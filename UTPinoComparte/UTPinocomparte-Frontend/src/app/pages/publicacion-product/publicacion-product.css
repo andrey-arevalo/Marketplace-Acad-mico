@@ -1,25 +1,90 @@
 .create-product-card {
-  background-color: var(--card-bg);
-  color: var(--text-main);
-  border: 1px solid var(--border-color) !important;
+  background-color: #fff3ec;
+  border: 1px solid #ebd5c5 !important;
+  box-shadow: 0 10px 25px rgba(92, 58, 33, 0.04) !important;
 }
 
-.form-control,
-.form-select {
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  border-color: var(--border-color);
+.title-main {
+  color: #4a2e18;
+  font-size: 2rem;
 }
 
-.form-control:focus,
-.form-select:focus {
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  border-color: var(--gold-primary);
-  box-shadow: 0 0 0 0.2rem rgba(168, 114, 42, 0.15);
+.subtitle-main {
+  color: #7a5238;
+  font-size: 0.95rem;
 }
 
-.form-control::placeholder {
-  color: var(--text-main);
-  opacity: 0.5;
+.custom-input {
+  background-color: #faede6 !important;
+  border: 1px solid #d9b8a3 !important;
+  color: #3d2614 !important;
+  padding: 11px 14px;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-input:focus {
+  background-color: #ffffff !important;
+  border-color: #9c6c3c !important;
+  box-shadow: 0 0 0 0.25rem rgba(156, 108, 60, 0.15) !important;
+}
+
+.custom-input::placeholder {
+  color: #a68470;
+}
+
+/* Botón Volver */
+.btn-volver-custom {
+  background: transparent;
+  border: none;
+  color: #5c3a21;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.btn-volver-custom:hover {
+  background-color: rgba(92, 58, 33, 0.08);
+  color: #3d2614;
+}
+
+/* Botón Cancelar */
+.btn-outline-cancel {
+  background-color: transparent;
+  border: 1px solid #b58d73;
+  color: #5c3a21;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.btn-outline-cancel:hover {
+  background-color: rgba(92, 58, 33, 0.05);
+  border-color: #5c3a21;
+  color: #3d2614;
+}
+
+/* Botón Publicar (Color de fondo llamativo, elegante y formal) */
+.btn-publicar {
+  background: linear-gradient(135deg, #a8722a 0%, #8c5820 100%);
+  border: none;
+  color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(168, 114, 42, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-publicar:hover {
+  background: linear-gradient(135deg, #966323 0%, #784c1b 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 15px rgba(168, 114, 42, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-publicar:disabled {
+  background: #d1b89e;
+  color: #f7ebe1;
+  box-shadow: none;
+  transform: none;
 }

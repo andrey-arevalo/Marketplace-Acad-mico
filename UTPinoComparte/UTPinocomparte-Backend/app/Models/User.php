@@ -40,4 +40,10 @@ class User extends Authenticatable {
     {
         return $this->contrasena;
     }
+    
+    // Relación: Un usuario tiene muchas publicaciones
+    public function publicaciones()
+    {
+        return $this->hasMany(Publicacion::class, 'usuarioid', 'usuarioid');
+    }
 }

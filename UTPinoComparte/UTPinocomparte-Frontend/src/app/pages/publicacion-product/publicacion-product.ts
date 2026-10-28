@@ -2,10 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  ProductService,
-  ProductoPayload
-} from '../../services/product.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-publicacionproduct',
@@ -24,106 +21,92 @@ export class PublicacionProductComponent {
 
   errorMessage: string = '';
   loading: boolean = false;
+  archivoSeleccionado: File | null = null;
 
+  // Categorías sincronizadas con tu BD de MySQL (Sin "Hogar")
   categorias = [
     { id: 1, nombre: 'Electrónica' },
     { id: 2, nombre: 'Ropa' },
-    { id: 3, nombre: 'Libros' },
-    { id: 4, nombre: 'Arte' },
-    { id: 5, nombre: 'Deportes' },
-    { id: 6, nombre: 'Colección' }
+    { id: 4, nombre: 'Vehículos' },
+    { id: 5, nombre: 'Libros' },
+    { id: 6, nombre: 'Arte' },
+    { id: 7, nombre: 'Deportes' },
+    { id: 8, nombre: 'Colección' }
   ];
 
-  producto: ProductoPayload = {
+  producto = {
     nom_prod: '',
-    img_prod: '',
     precio: 0,
-    stock: 0,
-    estado: '',
-    cat_prodid: 0
+    stock: 1,
+    cat_prodid: 0,
+    estado: 'Disponible'
   };
 
-  crearProducto(): void {
+  // Método para capturar el archivo subido en el input type="file"
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.archivoSeleccionado = file;
+    }
+  }
 
+  crearProducto(): void {
     this.errorMessage = '';
 
     if (!this.producto.nom_prod.trim()) {
-
-      this.errorMessage =
-        'El nombre del producto es obligatorio.';
-
+      this.errorMessage = 'El nombre del producto es obligatorio.';
       return;
     }
 
-    if (
-      this.producto.precio === null ||
-      this.producto.precio <= 0
-    ) {
-
-      this.errorMessage =
-        'El precio debe ser mayor que 0.';
-
+    if (this.producto.precio <= 0) {
+      this.errorMessage = 'El precio debe ser mayor que 0.';
       return;
     }
 
-    if (this.producto.stock < 0) {
-
-      this.errorMessage =
-        'El stock no puede ser negativo.';
-
+    if (this.producto.stock <= 0) {
+      this.errorMessage = 'El stock debe ser al menos 1.';
       return;
     }
 
-    if (!this.producto.cat_prodid) {
-
-      this.errorMessage =
-        'Debes seleccionar una categoría.';
-
+    if (!this.producto.cat_prodid || this.producto.cat_prodid === 0) {
+      this.errorMessage = 'Debes seleccionar una categoría válida.';
       return;
     }
 
-    if (!this.producto.estado.trim()) {
-
-      this.errorMessage =
-        'Debes seleccionar un estado.';
-
+    if (!this.archivoSeleccionado) {
+      this.errorMessage = 'Debes adjuntar una fotografía del producto.';
       return;
     }
 
     this.loading = true;
 
-    this.productService
-      .crearProducto(this.producto)
-      .subscribe({
+    // Construimos el FormData para enviarlo tal cual lo espera Laravel
+    const formData = new FormData();
+    formData.append('nom_prod', this.producto.nom_prod);
+    formData.append('precio', this.producto.precio.toString());
+    formData.append('stock', this.producto.stock.toString());
+    formData.append('cat_prodid', this.producto.cat_prodid.toString());
+    formData.append('estado', this.producto.estado);
+    
+    if (this.archivoSeleccionado) {
+      formData.append('img_prod', this.archivoSeleccionado);
+    }
 
-        next: () => {
-
-          alert(
-            'Producto creado correctamente.'
-          );
-
-          this.router.navigate(['/']);
-
-        },
-
-        error: (error) => {
-
-          console.error(
-            'Error al crear producto:',
-            error
-          );
-
-          this.errorMessage =
-            'No se pudo crear el producto.';
-
-          this.loading = false;
-        }
-
-      });
+    // Llamada al servicio
+    this.productService.crearProducto(formData).subscribe({
+      next: (response) => {
+        alert('¡Producto y publicación creados con éxito!');
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Error al crear producto:', error);
+        this.errorMessage = error?.error?.message || 'No se pudo crear el producto. Revisa los datos.';
+        this.loading = false;
+      }
+    });
   }
 
   cancelar(): void {
-
     this.router.navigate(['/']);
   }
 }

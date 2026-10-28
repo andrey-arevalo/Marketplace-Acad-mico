@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Producto {
@@ -28,8 +28,7 @@ export interface ProductoPayload {
 export class ProductService {
 
   private readonly http = inject(HttpClient);
-
-  private readonly apiUrl = 'http://localhost/utpino-backend/productos';
+  private readonly apiUrl = 'http://127.0.0.1:8000/api/publicaciones';
 
   getProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.apiUrl);
@@ -39,23 +38,53 @@ export class ProductService {
     return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
-  crearProducto(producto: ProductoPayload): Observable<Producto> {
-    return this.http.post<Producto>(this.apiUrl, producto);
+  // AQUÍ ESTÁ LA CLAVE: Adjuntamos el Token del localStorage en los headers
+  crearProducto(producto: ProductoPayload | FormData): Observable<any> {
+    // Busca el token con el nombre que usen en el Login (ajusta 'token' o 'auth_token' si es necesario)
+    const token = localStorage.getItem('token') || localStorage.getItem('auth_token') || '';
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+      // Ojo: No pongas 'Content-Type' cuando usas FormData, Angular lo calcula solo.
+    });
+
+    return this.http.post<any>(this.apiUrl, producto, { headers });
   }
 
   actualizarProducto(
     id: number,
-    producto: ProductoPayload
-  ): Observable<Producto> {
-    return this.http.put<Producto>(
+    producto: ProductoPayload | FormData
+  ): Observable<any> {
+    const token = localStorage.getItem('token') || localStorage.getItem('auth_token') || '';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(
       `${this.apiUrl}/${id}`,
-      producto
+      producto,
+      { headers }
     );
   }
 
   eliminarProducto(id: number): Observable<void> {
+    const token = localStorage.getItem('token') || localStorage.getItem('auth_token') || '';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
     return this.http.delete<void>(
-      `${this.apiUrl}/${id}`
+      `${this.apiUrl}/${id}`,
+      { headers }
     );
   }
+  getMisPublicaciones(): Observable<any[]> {
+  const token = localStorage.getItem('token') || localStorage.getItem('auth_token') || '';
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  // Apunta a la nueva ruta que creamos en Laravel
+  return this.http.get<any[]>('http://127.0.0.1:8000/api/mis-publicaciones', { headers });
+}
 }

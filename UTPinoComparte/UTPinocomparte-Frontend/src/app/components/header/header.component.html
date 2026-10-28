@@ -31,7 +31,7 @@
             <!-- ZONA CONDICIONAL: SI ESTÁ LOGUEADO (Imagen 1) -->
             <div *ngIf="usuarioLogueado; else modoInvitado" class="d-flex align-items-center gap-3">
                 <!-- BOTÓN PUBLICAR -->
-                <button type="button" class="btn text-white px-4 rounded-pill fw-medium shadow-sm" style="background-color: #b08968; font-size: 0.9rem;" (click)="verificarAccesoPublicar()">
+                <button routerLink="/publicar" class="btn text-white px-4 rounded-pill fw-medium shadow-sm" style="background-color: #b08968; font-size: 0.9rem;" (click)="verificarAccesoPublicar()">
                     <i class="fa-solid fa-plus me-1"></i> Publicar
                 </button>
 
@@ -58,50 +58,6 @@
                 </a>
             </ng-template>
 
-        </div>
-
-        <!-- VENTANA MODAL DE PUBLICACIÓN -->
-        <div class="modal fade" id="modalPublicar" tabindex="-1" aria-labelledby="modalPublicarLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content border-0 shadow" style="background-color: #fcf4ee; border-radius: 15px;">
-                    
-                    <!-- Cabecera del Modal -->
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title fw-bold" id="modalPublicarLabel" style="color: #2b221e; font-family: 'Georgia', serif;">
-                            <i class="fa-solid fa-circle-plus me-2" style="color: #b08968;"></i> Nueva Publicación
-                        </h5>
-                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <!-- Cuerpo del Modal -->
-                    <div class="modal-body px-4 py-3">
-                        <form>
-                            <div class="mb-3">
-                                <label for="tituloArticulo" class="form-label fw-medium text-dark" style="font-size: 0.9rem;">Título del artículo</label>
-                                <input type="text" class="form-control rounded-pill border-0 shadow-sm px-3 py-2" id="tituloArticulo" placeholder="¿Qué deseas compartir?" style="background-color: #f2dbcc;">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="descripcionArticulo" class="form-label fw-medium text-dark" style="font-size: 0.9rem;">Descripción</label>
-                                <textarea class="form-control border-0 shadow-sm p-3" id="descripcionArticulo" rows="3" placeholder="Detalles, categoría o estado..." style="background-color: #f2dbcc; border-radius: 12px;"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="fotoArticulo" class="form-label fw-medium text-dark" style="font-size: 0.9rem;">Imagen del artículo</label>
-                                <input type="file" class="form-control rounded-pill border-0 shadow-sm" id="fotoArticulo" style="background-color: #f2dbcc;" accept="image/*">
-                            </div>
-
-                            <!-- Botón de acción -->
-                            <div class="d-grid mt-4">
-                                <button type="button" class="btn text-white rounded-pill py-2 fw-medium shadow-sm" style="background-color: #b08968;" data-bs-dismiss="modal">
-                                    Publicar ahora
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
         </div>
 
     </div>

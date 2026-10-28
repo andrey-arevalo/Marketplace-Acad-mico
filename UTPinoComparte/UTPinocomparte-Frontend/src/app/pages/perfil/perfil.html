@@ -1,24 +1,65 @@
 <div class="container mt-4">
-  <div class="card p-4 shadow-sm">
+  <!-- Tarjeta de Información del Usuario -->
+  <div class="card p-4 shadow-sm mb-4">
     <div class="row align-items-center">
       <!-- Avatar real -->
       <div class="col-md-3 text-center">
-        <img [src]="usuario?.img_perfil || 'Avatar-perfil-prueba.jpeg'" alt="Avatar" class="rounded-circle img-fluid" style="width: 120px; height: 120px; object-fit: cover;">
+        <img [src]="usuario?.foto || 'assets/Avatar-perfil-prueba.jpeg'" 
+             alt="Avatar" 
+             class="rounded-circle img-fluid shadow-sm" 
+             style="width: 120px; height: 120px; object-fit: cover;"
+             onerror="this.src='https://via.placeholder.com/120?text=Avatar'">
       </div>
       
       <!-- Información del Perfil -->
       <div class="col-md-9">
-        <h2>{{ usuario?.nom }} {{ usuario?.appell }}</h2>
+        <h2 class="fw-bold text-dark mb-1">
+          {{ usuario?.nom_us || 'Estudiante UTP' }}
+        </h2>
         
         <!-- Código de estudiante -->
-        <p class="text-primary fw-bold mb-1">Código UTP: {{ usuario?.usuario?.cod_est || 'Cargando...' }}</p>
+        <p class="text-primary fw-bold mb-1">
+          Código UTP: {{ usuario?.cod_est || 'No registrado' }}
+        </p>
         
-        <!-- Teléfono -->
-        <p class="text-muted mb-3">Teléfono: {{ usuario?.telef || 'No registrado' }}</p>
-        
-        <div class="d-flex gap-3">
-          <!-- Ojo aquí: usamos 'correo' tal como está en tu user.model.ts -->
-          <span><strong>Correo:</strong> {{ usuario?.usuario?.correo }}</span>
+        <!-- Correo -->
+        <div class="d-flex gap-3 text-secondary">
+          <span><strong>Correo:</strong> {{ usuario?.correo || 'No disponible' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN DE MIS PUBLICACIONES Y PRODUCTOS -->
+  <div class="card p-4 shadow-sm">
+    <h3 class="fw-bold mb-3 text-dark">Mis publicaciones y productos</h3>
+
+    <!-- Estado de carga -->
+    <div *ngIf="loadingPublicaciones" class="text-muted py-3">
+      Cargando tus publicaciones...
+    </div>
+
+    <!-- Si no hay publicaciones -->
+    <div *ngIf="!loadingPublicaciones && misPublicaciones.length === 0" class="text-muted py-3">
+      Aún no has publicado ningún producto. ¡Anímate a publicar el primero!
+    </div>
+
+    <!-- Grid de Publicaciones -->
+    <div class="row" *ngIf="!loadingPublicaciones && misPublicaciones.length > 0">
+      <div class="col-md-4 mb-3" *ngFor="let pub of misPublicaciones">
+        <div class="card h-100 shadow-sm border-0">
+          <img [src]="pub.producto?.img_prod ? 'http://127.0.0.1:8000/storage/' + pub.producto.img_prod : 'assets/no-image.png'" 
+               class="card-img-top" 
+               alt="Imagen del producto" 
+               style="height: 180px; object-fit: cover;"
+               onerror="this.src='https://via.placeholder.com/300x180?text=Sin+Imagen'">
+          
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">{{ pub.producto?.nom_prod }}</h5>
+            <p class="text-success fw-bold fs-5 mb-1">S/. {{ pub.producto?.precio }}</p>
+            <p class="text-muted small mb-2">Stock: {{ pub.producto?.stock }}</p>
+            <span class="badge bg-secondary align-self-start mb-3">{{ pub.producto?.estado }}</span>
+          </div>
         </div>
       </div>
     </div>
