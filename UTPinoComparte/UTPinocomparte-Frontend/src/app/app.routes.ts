@@ -8,18 +8,24 @@ import { ChatComponent } from './pages/chat/chat';
 import { DetailProductComponent } from './pages/detail-product/detail-product';
 import { PublicacionProductComponent } from './pages/publicacion-product/publicacion-product';
 import { AuthModalComponent } from './pages/authmodal/authmodal';
+import { SoporteComponent } from './components/soporte/soporte.component';
 
 export const routes: Routes = [
 
   { path: '', component: InicioComponent },
-  { path: 'auth', component: AuthModalComponent},
+
+  { path: 'auth', component: AuthModalComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegisterComponent},
-  {path: 'perfil', component: PerfilComponent },
-  { path: 'chat',component: ChatComponent},
-  { path: 'producto/:id', component: DetailProductComponent},
-  { path: 'publicar', component: PublicacionProductComponent},
-  { path: 'register', component: RegisterComponent },   // Formulario de Registro
-  { path: 'login', component: LoginComponent },         // Formulario de Login
-  { path: '**', redirectTo: ''}
+  { path: 'registro', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
+
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'chat', component: ChatComponent },
+  { path: 'producto/:id', component: DetailProductComponent },
+  { path: 'publicar', component: PublicacionProductComponent },
+
+  { path: 'soporte', component: SoporteComponent },
+
+  { path: '**', redirectTo: '' }
+
 ];
