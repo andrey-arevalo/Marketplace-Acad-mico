@@ -14,28 +14,13 @@ CREATE TABLE usuario (
     ultim_acces DATETIME DEFAULT NULL,
     foto VARCHAR(255) DEFAULT NULL
 );
--- Mostrar la tabla usuario
 SELECT * FROM usuario;
-
--- Editar alguna variable de una tabla
--- Cambiamos la columna nombre_us por nom_us en tu tabla usuario
-ALTER TABLE usuario CHANGE COLUMN nombre_us nom_us VARCHAR(100) NOT NULL;
-DELETE FROM usuario WHERE usuarioid = 1; -- Para eliminar algún dato de una tabla
 
 -- 2. Tabla CATEGORIA_PROD
 CREATE TABLE categoria_prod (
     cat_prodid INT AUTO_INCREMENT PRIMARY KEY,
     nom_cat VARCHAR(100) NOT NULL
 );
--- Se cambia la columna de nombre por nom_cat
-ALTER TABLE categoria_prod CHANGE COLUMN nombre nom_cat VARCHAR(100) NOT NULL;
-
--- Paso para eliminiar una tabla con llave foraneas
--- Desactivamos temporalmente las restricciones de llaves foráneas para poder borrar con confianza
-SET FOREIGN_KEY_CHECKS = 0;
-
--- Volvemos a activar las restricciones de seguridad
-SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO categoria_prod (nom_cat) VALUES 
 ('Electrónica'),
@@ -49,18 +34,20 @@ INSERT INTO categoria_prod (nom_cat) VALUES
 -- Mostrar la tabla de categoria de productos
 SELECT * FROM categoria_prod;
 
-
 -- 3. Tabla PRODUCTO
 CREATE TABLE producto (
     productoid INT AUTO_INCREMENT PRIMARY KEY,
     nom_prod VARCHAR(150) NOT NULL,
     img_prod VARCHAR(255),
     precio DECIMAL(10,2) NOT NULL,
+    motivo_intercambio TEXT NULL,
+    desc_prod TEXT NULL,
     stock INT NOT NULL,
     estado VARCHAR(20) NOT NULL,
     cat_prodid INT NOT NULL,
     CONSTRAINT fk_producto_categoria FOREIGN KEY (cat_prodid) REFERENCES categoria_prod(cat_prodid)
 );
+SELECT * FROM producto;
 
 -- 4. Tabla PUBLICACION
 CREATE TABLE publicacion (
@@ -69,8 +56,11 @@ CREATE TABLE publicacion (
     hora TIME NOT NULL,
     estado VARCHAR(20) NOT NULL,
     productoid INT NOT NULL,
-    CONSTRAINT fk_publicacion_producto FOREIGN KEY (productoid) REFERENCES producto(productoid)
+    usuarioid INT NOT NULL,
+    CONSTRAINT fk_publicacion_producto FOREIGN KEY (productoid) REFERENCES producto(productoid),
+	CONSTRAINT fk_publicacion_usuario FOREIGN KEY (usuarioid) REFERENCES usuario(usuarioid)
 );
+SELECT * FROM publicacion;
 
 -- 5. Tabla HISTORIAL_PUBLIC
 CREATE TABLE historial_public (
@@ -119,4 +109,19 @@ CREATE TABLE mensaje (
     estado VARCHAR(20),
     CONSTRAINT fk_mensaje_conversacion FOREIGN KEY (conversacionid) REFERENCES conversacion(conversacionid),
     CONSTRAINT fk_mensaje_participante FOREIGN KEY (participanteid) REFERENCES participante(participanteid)
+);
+
+-- 10. Tabla de Reporte
+CREATE TABLE IF NOT EXISTS soportes (
+  soporteid INT AUTO_INCREMENT PRIMARY KEY,
+  usuarioid INT NULL,
+  tipoProblema VARCHAR(100) NOT NULL,
+  nombre VARCHAR(100) NOT NULL,
+  correo VARCHAR(150) NOT NULL,
+  telefono VARCHAR(20) NULL,
+  transaccion VARCHAR(100) NULL,
+  desc_report TEXT NOT NULL,
+  archivo_path VARCHAR(255) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
