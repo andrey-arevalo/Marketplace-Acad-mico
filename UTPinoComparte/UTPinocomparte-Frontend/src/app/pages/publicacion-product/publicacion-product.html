@@ -26,9 +26,10 @@
             (ngSubmit)="crearProducto()">
 
             <!-- 1. NOMBRE DEL PRODUCTO -->
-            <div class="mb-3">
+            <div class="form-section-card mb-4">
+              <span class="section-label-num">1. NOMBRE DEL PRODUCTO</span>
               <label class="form-label fw-semibold">
-                Nombre del producto *
+                ¿Cómo se llama tu producto? <span class="text-danger">*</span>
               </label>
               <input
                 type="text"
@@ -37,89 +38,145 @@
                 [(ngModel)]="producto.nom_prod"
                 required
                 minlength="3"
-                maxlength="150"
-                placeholder="Ej: Libro de Cálculo III">
+                maxlength="80"
+                placeholder="Ej: Calculadora Casio fx-991ES">
+              <div class="text-end text-muted small mt-1">
+                {{ (producto.nom_prod ? producto.nom_prod.length : 0) }}/80
+              </div>
             </div>
 
             <!-- 2. TIPO Y CANTIDAD -->
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">
-                  Tipo de producto (Categoría) *
-                </label>
-                <select
-                  class="form-select custom-input"
-                  name="cat_prodid"
-                  [(ngModel)]="producto.cat_prodid"
-                  required>
-                  <option [ngValue]="0" disabled>
-                    Selecciona una categoría
-                  </option>
-                  <option
-                    *ngFor="let categoria of categorias"
-                    [ngValue]="categoria.id">
-                    {{ categoria.nombre }}
-                  </option>
-                </select>
-              </div>
+            <div class="form-section-card mb-4">
+              <span class="section-label-num">2. TIPO Y CANTIDAD</span>
+              <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <label class="form-label fw-semibold">
+                    Tipo de producto *
+                  </label>
+                  <select
+                    class="form-select custom-input"
+                    name="cat_prodid"
+                    [(ngModel)]="producto.cat_prodid"
+                    required>
+                    <option [ngValue]="0" disabled>
+                      Selecciona...
+                    </option>
+                    <option
+                      *ngFor="let categoria of categorias"
+                      [ngValue]="categoria.id">
+                      {{ categoria.nombre }}
+                    </option>
+                  </select>
+                </div>
 
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">
-                  Cantidad (Stock) *
-                </label>
-                <input
-                  type="number"
-                  class="form-control custom-input"
-                  name="stock"
-                  [(ngModel)]="producto.stock"
-                  required
-                  min="1"
-                  step="1"
-                  placeholder="Ej: 10">
-              </div>
-            </div>
-
-            <!-- 3. PRECIO Y ESTADO -->
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">
-                  Precio (S/.) *
-                </label>
-                <input
-                  type="number"
-                  class="form-control custom-input"
-                  name="precio"
-                  [(ngModel)]="producto.precio"
-                  required
-                  min="0.00"
-                  step="0.01"
-                  placeholder="Ej: 45.00">
-              </div>
-
-              <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">
-                  Estado *
-                </label>
-                <select
-                  class="form-select custom-input"
-                  name="estado"
-                  [(ngModel)]="producto.estado"
-                  required>
-                  <option value="" disabled>
-                    Selecciona un estado
-                  </option>
-                  <option value="Disponible">
-                    Disponible
-                  </option>
-                  <option value="Intercambio">
-                    Intercambio
-                  </option>
-                </select>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    Cantidad *
+                  </label>
+                  <div class="input-group">
+                    <span class="input-group-text prefix-symbol">#</span>
+                    <input
+                      type="number"
+                      class="form-control custom-input pl-number"
+                      name="stock"
+                      [(ngModel)]="producto.stock"
+                      required
+                      min="1"
+                      step="1"
+                      placeholder="1">
+                  </div>
+                </div>
               </div>
             </div>
 
-            <!-- 4. FOTOGRAFÍA DEL PRODUCTO -->
-            <div class="mb-4">
+            <!-- 3. DESCRIPCIÓN (OPCIONAL) -->
+            <div class="form-section-card mb-4">
+              <span class="section-label-num">3. DESCRIPCIÓN (OPCIONAL)</span>
+              <label class="form-label fw-semibold">
+                Detalla el estado, características o condiciones del producto
+              </label>
+              <textarea
+                class="form-control custom-textarea"
+                name="desc_prod"
+                [(ngModel)]="producto.desc_prod"
+                maxlength="300"
+                placeholder="Ej: En buen estado, usado solo un ciclo. Incluye estuche original..."></textarea>
+              <div class="text-end text-muted small mt-1">
+                {{ (producto.desc_prod ? producto.desc_prod.length : 0) }}/300
+              </div>
+            </div>
+
+            <!-- 4. ¿VENDER O INTERCAMBIAR? -->
+            <div class="mb-4 p-3 rounded-3" style="background-color: #f7ede6; border: 1px solid #dfc4bc;">
+              <span class="d-block text-uppercase fw-bold mb-2" style="font-size: 11px; color: #8c7365; letter-spacing: 1px;">4. ¿VENDER O INTERCAMBIAR?</span>
+              
+              <!-- Tarjetas de selección visual -->
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <div class="option-card" [class.active]="producto.estado === 'Disponible'" (click)="producto.estado = 'Disponible'">
+                    <div class="card-icon">🏷️</div>
+                    <div class="card-content">
+                      <strong>Vender</strong>
+                      <p class="text-muted small mb-0">Fija un precio en soles y recibe pago directo del comprador.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="option-card" [class.active]="producto.estado === 'Intercambio'" (click)="producto.estado = 'Intercambio'">
+                    <div class="card-icon">🔄</div>
+                    <div class="card-content">
+                      <strong>Intercambiar</strong>
+                      <p class="text-muted small mb-0">Cambia tu producto por otro artículo que necesites.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SI ELIGE VENDER -->
+              <div class="mt-3" *ngIf="producto.estado === 'Disponible'">
+                <label class="form-label fw-semibold text-dark">Precio en Soles (S/.) *</label>
+                <div class="input-group">
+                  <span class="input-group-text fw-bold" style="background-color: #dfc4bc; border: 1px solid #dfc4bc; color: #5c4033; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">S/.</span>
+                  <input
+                    type="number"
+                    class="form-control custom-input"
+                    name="precio"
+                    [(ngModel)]="producto.precio"
+                    required
+                    min="0.00"
+                    step="0.01"
+                    placeholder="0.00"
+                    style="background-color: #ebd7ce; border: 1px solid #dfc4bc; color: #3e3027; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                </div>
+                  <div class="text-muted small mt-1" style="color: #6c584c !important;">
+                  Máximo S/ 1,000
+                  </div>                
+              </div>
+            </div>
+
+            <!-- SI ELIGE INTERCAMBIAR -->
+              <div class="mt-3 animate-fade-in" *ngIf="producto.estado === 'Intercambio'">
+                <label class="form-label fw-semibold text-dark">
+                  ¿Por qué lo quieres intercambiar? <span class="text-danger">*</span>
+                </label>
+                <div class="input-wrapper-intercambio">
+                  <textarea
+                    class="form-control custom-textarea"
+                    name="motivo_intercambio"
+                    [(ngModel)]="producto.motivo_intercambio"
+                    required
+                    maxlength="500"
+                    placeholder="Ej: Porque el libro aun se encuentra en buen estado y me gustaría intercambiarlo por uno similar "></textarea>
+                </div>
+                <div class="text-end text-muted small mt-1">
+                  {{ (producto.motivo_intercambio ? producto.motivo_intercambio.length : 0) }}/500
+                </div>
+              </div>
+
+            <!-- 5. FOTOGRAFÍA DEL PRODUCTO -->
+            <div class="form-section-card mb-4">
+              <span class="section-label-num">5. FOTOGRAFÍA DEL PRODUCTO</span>
               <label class="form-label fw-semibold">
                 Fotografía del producto *
               </label>
@@ -140,7 +197,7 @@
               {{ errorMessage }}
             </div>
 
-            <!-- Botones de Acción (Diseño equilibrado y elegante) -->
+            <!-- Botones de Acción -->
             <div class="d-flex gap-3 pt-2">
               <button
                 type="button"

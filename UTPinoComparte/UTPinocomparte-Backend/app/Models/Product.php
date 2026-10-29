@@ -16,9 +16,11 @@ class Product extends Model
         'nom_prod',
         'precio',
         'cat_prodid',
+        'desc_prod',
         'stock',
         'img_prod',
-        'estado'
+        'estado',
+        'motivo_intercambio'
     ];
 
     // Relación con Publicacion

@@ -44,6 +44,6 @@ class User extends Authenticatable {
     // Relación: Un usuario tiene muchas publicaciones
     public function publicaciones()
     {
-        return $this->hasMany(Publicacion::class, 'usuarioid', 'usuarioid');
+        return $this->hasMany(Publication::class, 'usuarioid', 'usuarioid');
     }
 }

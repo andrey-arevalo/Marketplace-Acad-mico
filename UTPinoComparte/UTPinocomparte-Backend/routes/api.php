@@ -12,6 +12,6 @@ Route::get('/publicaciones', [PublicacionController::class, 'index']);// Ruta p�
 // Ruta protegida que exige el token de sesión
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/publicaciones', [PublicacionController::class, 'store']);
+    Route::get('/mis-publicaciones', [PublicacionController::class, 'misPublicaciones']);
+    Route::delete('/publicaciones/{id}', [PublicacionController::class, 'destroy']); // <--- Ruta vital para el botón eliminar
 });
-
-Route::middleware('auth:sanctum')->get('/mis-publicaciones', [PublicacionController::class, 'misPublicaciones']);

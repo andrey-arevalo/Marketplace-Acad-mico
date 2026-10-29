@@ -15,12 +15,19 @@ class Publication extends Model {
         'fecha',
         'hora',
         'estado',
-        'productoid'
+        'productoid',
+        'usuarioid',
     ];
 
     // Relación: Una publicación pertenece a un producto
     public function producto()
     {
         return $this->belongsTo(Product::class, 'productoid', 'productoid');
+    }
+
+    // Relación: Una publicación pertenece a un usuario
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuarioid', 'usuarioid');
     }
 }

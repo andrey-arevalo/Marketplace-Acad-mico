@@ -39,7 +39,9 @@ export class PublicacionProductComponent {
     precio: 0,
     stock: 1,
     cat_prodid: 0,
-    estado: 'Disponible'
+    estado: 'Disponible',
+    desc_prod: '',
+    motivo_intercambio: ''
   };
 
   // Método para capturar el archivo subido en el input type="file"
@@ -78,6 +80,11 @@ export class PublicacionProductComponent {
       return;
     }
 
+    if (this.producto.estado === 'Disponible' && this.producto.precio > 1000) {
+      this.errorMessage = 'El precio máximo permitido es de S/ 1,000.';
+      return;
+    }
+
     this.loading = true;
 
     // Construimos el FormData para enviarlo tal cual lo espera Laravel
@@ -85,9 +92,11 @@ export class PublicacionProductComponent {
     formData.append('nom_prod', this.producto.nom_prod);
     formData.append('precio', this.producto.precio.toString());
     formData.append('stock', this.producto.stock.toString());
+    formData.append('desc_prod', this.producto.desc_prod || '');
     formData.append('cat_prodid', this.producto.cat_prodid.toString());
     formData.append('estado', this.producto.estado);
-    
+    formData.append('motivo_intercambio', this.producto.motivo_intercambio || '');
+
     if (this.archivoSeleccionado) {
       formData.append('img_prod', this.archivoSeleccionado);
     }

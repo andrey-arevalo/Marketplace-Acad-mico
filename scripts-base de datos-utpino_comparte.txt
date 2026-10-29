@@ -5,6 +5,7 @@ USE utpino_comparte;
 -- 1. Tabla USUARIO (Fundamental para tu parte de login y registro)
 CREATE TABLE usuario (
     usuarioid INT AUTO_INCREMENT PRIMARY KEY,
+    nom_us VARCHAR(100) NOT NULL,
     cod_est VARCHAR(100) NOT NULL,
     correo VARCHAR(150) NOT NULL UNIQUE,
     contrasena VARCHAR(255) NOT NULL,
@@ -13,12 +14,41 @@ CREATE TABLE usuario (
     ultim_acces DATETIME DEFAULT NULL,
     foto VARCHAR(255) DEFAULT NULL
 );
+-- Mostrar la tabla usuario
+SELECT * FROM usuario;
+
+-- Editar alguna variable de una tabla
+-- Cambiamos la columna nombre_us por nom_us en tu tabla usuario
+ALTER TABLE usuario CHANGE COLUMN nombre_us nom_us VARCHAR(100) NOT NULL;
+DELETE FROM usuario WHERE usuarioid = 1; -- Para eliminar algún dato de una tabla
 
 -- 2. Tabla CATEGORIA_PROD
 CREATE TABLE categoria_prod (
     cat_prodid INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL
+    nom_cat VARCHAR(100) NOT NULL
 );
+-- Se cambia la columna de nombre por nom_cat
+ALTER TABLE categoria_prod CHANGE COLUMN nombre nom_cat VARCHAR(100) NOT NULL;
+
+-- Paso para eliminiar una tabla con llave foraneas
+-- Desactivamos temporalmente las restricciones de llaves foráneas para poder borrar con confianza
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Volvemos a activar las restricciones de seguridad
+SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO categoria_prod (nom_cat) VALUES 
+('Electrónica'),
+('Ropa'),
+('Vehículos'),
+('Libros'),
+('Arte'),
+('Deportes'),
+('Colección');
+
+-- Mostrar la tabla de categoria de productos
+SELECT * FROM categoria_prod;
+
 
 -- 3. Tabla PRODUCTO
 CREATE TABLE producto (

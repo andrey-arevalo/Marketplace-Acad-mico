@@ -13,8 +13,6 @@ export class PublicacionService {
   crearPublicacion(formData: FormData, token: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
-      // Nota: No pongas 'Content-Type': 'multipart/form-data' manual, 
-      // HttpClient se encarga de calcular el boundary automáticamente con FormData.
     });
 
     return this.http.post<any>(this.apiUrl, formData, { headers });

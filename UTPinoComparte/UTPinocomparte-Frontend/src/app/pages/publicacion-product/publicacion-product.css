@@ -1,90 +1,159 @@
+/* Estilos generales del contenedor y tarjeta de registro */
 .create-product-card {
-  background-color: #fff3ec;
-  border: 1px solid #ebd5c5 !important;
-  box-shadow: 0 10px 25px rgba(92, 58, 33, 0.04) !important;
+  background-color: #fbf5f2;
+  border: 1px solid #e8d8d1 !important;
 }
 
 .title-main {
-  color: #4a2e18;
-  font-size: 2rem;
+  color: #1a120b;
+  font-size: 28px;
 }
 
 .subtitle-main {
-  color: #7a5238;
-  font-size: 0.95rem;
+  color: #6c584c !important;
+  font-size: 14px;
 }
 
+/* Subtítulos numerados estilo Figma (ej: 1. NOMBRE DEL PRODUCTO) */
+.section-label-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8c7365;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* Secciones internas con fondo sutil */
+.form-section-card {
+  background-color: #f7ede6;
+  border: 1px solid #dfc4bc;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+/* Inputs, selects y textareas personalizados */
 .custom-input {
-  background-color: #faede6 !important;
-  border: 1px solid #d9b8a3 !important;
-  color: #3d2614 !important;
-  padding: 11px 14px;
-  border-radius: 10px;
-  transition: all 0.2s ease-in-out;
-}
-
-.custom-input:focus {
-  background-color: #ffffff !important;
-  border-color: #9c6c3c !important;
-  box-shadow: 0 0 0 0.25rem rgba(156, 108, 60, 0.15) !important;
+  background-color: #ebd7ce !important;
+  border: 1px solid #dfc4bc !important;
+  color: #3e3027 !important;
+  border-radius: 10px !important;
+  padding: 10px 14px;
+  font-size: 14px;
 }
 
 .custom-input::placeholder {
-  color: #a68470;
+  color: #9a8277 !important;
 }
 
-/* Botón Volver */
-.btn-volver-custom {
-  background: transparent;
-  border: none;
-  color: #5c3a21;
+.custom-textarea {
+  background-color: #ebd7ce !important;
+  border: 1px solid #dfc4bc !important;
+  color: #3e3027 !important;
+  border-radius: 10px !important;
+  resize: none;
+  height: 90px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.custom-textarea::placeholder {
+  color: #9a8277 !important;
+}
+
+/* Prefijos para símbolos como # o S/. */
+.prefix-symbol {
+  background-color: #dfc4bc !important;
+  border: 1px solid #dfc4bc !important;
+  color: #5c4033 !important;
   font-weight: 600;
-  font-size: 0.95rem;
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: background 0.2s;
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+}
+
+.pl-number {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/* ========================================================== */
+/* NUEVOS ESTILOS: TARJETAS DE SELECCIÓN VENDER / INTERCAMBIAR */
+/* ========================================================== */
+.option-card {
+  background-color: #fbf5f2;
+  border: 1px solid #dfc4bc;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 100%;
+}
+
+.option-card:hover {
+  border-color: #b38237;
+  background-color: #f9f0ec;
+}
+
+.option-card.active {
+  border-color: #b38237;
+  background-color: #f6ebd9;
+  box-shadow: 0 0 0 1px #b38237;
+}
+
+.card-icon {
+  font-size: 20px;
+  background-color: #ebd7ce;
+  padding: 8px 12px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-content strong {
+  display: block;
+  font-size: 14px;
+  color: #2c221e;
+  margin-bottom: 2px;
+}
+
+/* Botones de acción */
+.btn-volver-custom {
+  background-color: transparent;
+  border: none;
+  color: #5c4033;
+  font-weight: 600;
+  padding: 0;
 }
 
 .btn-volver-custom:hover {
-  background-color: rgba(92, 58, 33, 0.08);
-  color: #3d2614;
+  color: #1a120b;
 }
 
-/* Botón Cancelar */
 .btn-outline-cancel {
-  background-color: transparent;
-  border: 1px solid #b58d73;
-  color: #5c3a21;
+  background-color: #ebd7ce;
+  border: 1px solid #dfc4bc;
+  color: #5c4033;
   border-radius: 10px;
-  transition: all 0.2s;
 }
 
 .btn-outline-cancel:hover {
-  background-color: rgba(92, 58, 33, 0.05);
-  border-color: #5c3a21;
-  color: #3d2614;
+  background-color: #dfc4bc;
+  color: #2c221e;
 }
 
-/* Botón Publicar (Color de fondo llamativo, elegante y formal) */
 .btn-publicar {
-  background: linear-gradient(135deg, #a8722a 0%, #8c5820 100%);
+  background-color: #b38237;
   border: none;
   color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(168, 114, 42, 0.3);
-  transition: all 0.2s ease-in-out;
 }
 
 .btn-publicar:hover {
-  background: linear-gradient(135deg, #966323 0%, #784c1b 100%);
+  background-color: #9e712e;
   color: #ffffff;
-  box-shadow: 0 6px 15px rgba(168, 114, 42, 0.4);
-  transform: translateY(-1px);
-}
-
-.btn-publicar:disabled {
-  background: #d1b89e;
-  color: #f7ebe1;
-  box-shadow: none;
-  transform: none;
 }

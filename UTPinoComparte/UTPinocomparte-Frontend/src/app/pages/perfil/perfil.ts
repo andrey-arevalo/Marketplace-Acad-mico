@@ -18,24 +18,49 @@ export class PerfilComponent implements OnInit {
   misPublicaciones: any[] = [];
   loadingPublicaciones: boolean = true;
 
-  ngOnInit(): void {
-    // 1. Obtenemos los datos del usuario directamente del AuthService (que lee localStorage y normaliza la foto)
+ngOnInit(): void {
     this.authService.usuario$.subscribe({
-      next: (data) => {
-        this.usuario = data;
-      }
+      next: (data) => { this.usuario = data; }
     });
+    this.cargarPublicaciones(); // <--- Creamos un método reutilizable
+  }
 
-    // 2. Cargamos las publicaciones creadas por el usuario
+  cargarPublicaciones(): void {
+    this.loadingPublicaciones = true;
     this.productService.getMisPublicaciones().subscribe({
-      next: (data) => {
-        this.misPublicaciones = data;
+      next: (response: any) => {
+        console.log('Publicaciones recibidas:', response);
+        this.misPublicaciones = Array.isArray(response) ? response : (response.data || []);
         this.loadingPublicaciones = false;
       },
       error: (err) => {
-        console.error('Error al cargar las publicaciones del usuario', err);
+        console.error('Error al cargar las publicaciones', err);
         this.loadingPublicaciones = false;
       }
     });
+  }
+
+eliminarPublicacion(publiId: number): void {
+    console.log('ID de publicación a eliminar:', publiId);
+
+    if (!publiId) {
+      alert('Error: No se encontró el identificador de la publicación.');
+      return;
+    }
+
+    if (confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
+      this.productService.eliminarPublicacion(publiId).subscribe({
+        next: (res) => {
+          console.log('Eliminado con éxito:', res);
+          // Recargamos la lista limpia desde el servidor
+          this.cargarPublicaciones();
+          alert('Publicación eliminada correctamente.');
+        },
+        error: (err) => {
+          console.error('Error al eliminar:', err);
+          alert('No se pudo eliminar el producto.');
+        }
+      });
+    }
   }
 }

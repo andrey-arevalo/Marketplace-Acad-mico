@@ -79,7 +79,7 @@ export class ProductService {
     );
   }
   getMisPublicaciones(): Observable<any[]> {
-  const token = localStorage.getItem('token') || localStorage.getItem('auth_token') || '';
+  const token = localStorage.getItem('auth_token') || '';
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
   });
@@ -87,4 +87,12 @@ export class ProductService {
   // Apunta a la nueva ruta que creamos en Laravel
   return this.http.get<any[]>('http://127.0.0.1:8000/api/mis-publicaciones', { headers });
 }
+  eliminarPublicacion(id: number): Observable<any> {
+  const token = localStorage.getItem('auth_token') || '';
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  return this.http.delete(`http://127.0.0.1:8000/api/publicaciones/${id}`, { headers });
+  }
 }
