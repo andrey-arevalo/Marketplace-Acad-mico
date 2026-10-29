@@ -41,13 +41,13 @@
 
             <p class="text-muted">
               Tus datos han sido validados en esta demostración.
-              El reporte todavía no se ha guardado en un servidor.
+              El reporte ha sido procesado correctamente.
             </p>
 
             <button
               type="button"
               class="btn gold-main-btn mt-3"
-              (click)="nuevoReporte(formSoporte)"
+              (click)="nuevoReporte()"
             >
               Enviar otro reporte
             </button>
@@ -211,25 +211,26 @@
               3. Describe el problema
             </h5>
 
-            <label for="descripcion" class="form-label small fw-semibold">
+            <label for="desc_report" class="form-label small fw-semibold">
               Descripción detallada <span class="text-danger">*</span>
             </label>
 
+            <!-- Actualizado a desc_report para empatar con la Base de Datos -->
             <textarea
-              id="descripcion"
-              name="descripcion"
+              id="desc_report"
+              name="desc_report"
               class="form-control form-control-figma shadow-none"
               rows="5"
               maxlength="1000"
               placeholder="Describe qué ocurrió, cuándo fue, qué artículo o pago estuvo involucrado y cualquier detalle relevante para agilizar la resolución..."
-              [(ngModel)]="reporte.descripcion"
-              #descripcion="ngModel"
+              [(ngModel)]="reporte.desc_report"
+              #descReportModel="ngModel"
               required
               minlength="10"
             ></textarea>
 
             <div class="d-flex justify-content-between align-items-start mt-1">
-              @if (descripcion.invalid && descripcion.touched) {
+              @if (descReportModel.invalid && descReportModel.touched) {
                 <small class="text-danger">
                   Describe el problema con al menos 10 caracteres.
                 </small>
@@ -240,7 +241,7 @@
               }
 
               <small class="text-muted text-nowrap ms-2">
-                {{ reporte.descripcion.length }} / 1000
+                {{ reporte.desc_report.length }} / 1000
               </small>
             </div>
 

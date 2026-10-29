@@ -1,9 +1,19 @@
-
+/* ==========================================
+   ESTILOS GENERALES Y FIGMA TEMA
+   ========================================== */
 .contacto-figma-bg,
 #contacto {
   background-color: var(--bg-main) !important;
 }
 
+.content-section-figma {
+  max-width: 100%;
+  overflow-x: hidden; /* Evita scroll horizontal no deseado en móviles */
+}
+
+/* ==========================================
+   FORMULARIOS E INPUTS RESPONSIVOS
+   ========================================== */
 .form-control-figma,
 .form-control,
 .form-select {
@@ -11,6 +21,7 @@
   border: 1px solid var(--border-color) !important;
   color: var(--text-main) !important;
   border-radius: 0.5rem;
+  width: 100%; /* Asegura que no rebase el contenedor */
 }
 
 .form-control-figma::placeholder,
@@ -24,17 +35,18 @@ textarea::placeholder {
 .form-control:focus,
 .form-select:focus {
   border-color: var(--gold-primary) !important;
-  box-shadow: 0 0 0 0.15rem
-    color-mix(in srgb, var(--gold-primary) 20%, transparent) !important;
+  box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--gold-primary) 20%, transparent) !important;
 }
 
+/* ==========================================
+   ZONA DE CARGA DE ARCHIVOS (DROPZONE)
+   ========================================== */
 .upload-dropzone {
   background-color: var(--bg-main) !important;
   border: 1px dashed var(--border-color) !important;
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
   cursor: pointer;
+  word-break: break-word; /* Evita que nombres largos rompan el diseño */
 }
 
 .upload-dropzone:hover,
@@ -43,8 +55,12 @@ textarea::placeholder {
   outline: none;
 }
 
+/* ==========================================
+   ESTILOS DE TEXTO Y COLORES
+   ========================================== */
 .gold-link {
   color: var(--gold-primary) !important;
+  word-break: break-all; /* Para enlaces largos en pantallas chicas */
 }
 
 .gold-text {
@@ -54,6 +70,7 @@ textarea::placeholder {
 .card-figma-bg {
   background-color: var(--bg-card, var(--bg-main));
   border-color: var(--border-color) !important;
+  word-wrap: break-word;
 }
 
 .list-group-item {
@@ -66,10 +83,11 @@ textarea::placeholder {
   font-size: 3.5rem;
 }
 
+/* ==========================================
+   BOTONES Y EFECTOS
+   ========================================== */
 .gold-main-btn {
-  transition:
-    filter 0.2s ease,
-    transform 0.2s ease;
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
 
 .gold-main-btn:hover {
@@ -80,6 +98,9 @@ textarea::placeholder {
   transform: scale(0.99);
 }
 
+/* ==========================================
+   MEDIA QUERIES PARA RESPONSIVIDAD MÓVIL
+   ========================================== */
 @media (max-width: 575.98px) {
   .upload-dropzone {
     padding: 1.25rem !important;
@@ -87,5 +108,10 @@ textarea::placeholder {
 
   .card-figma-bg {
     padding: 1.25rem !important;
+  }
+
+  /* Ajuste de tipografía en títulos para celulares pequeños */
+  h2.fw-bold {
+    font-size: 1.5rem !important;
   }
 }
