@@ -47,7 +47,7 @@
                     Destacado
                 </span>
                 <div class="overflow-hidden rounded-3 mb-3" style="height: 220px; background: #111;">
-                    <img src="/imgs/Iphone.webp" class="w-100 h-100 object-fit-cover opacity-75 transition-scale"
+                    <img src="assets/imgs/Iphone.webp" class="w-100 h-100 object-fit-cover opacity-75 transition-scale"
                         style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.08)'"
                         onmouseout="this.style.transform='scale(1)'" alt="iPhone">
                 </div>
@@ -247,86 +247,10 @@
                 <h3 class="fw-bold title-figma mb-2" style="font-size: 1.8rem;">¿Tienes algo que vender o intercambiar?</h3>
                 <p class="text-muted small mb-4">Únete a más de 12.500 usuarios que ya usan UTPINO COMPARTE para dar nueva vida a sus artículos.</p>
                 <div>
-                    <button type="button" class="btn gold-main-btn px-4 py-2 rounded-pill fw-bold" (click)="openAuthModal()">
+                    <button routerLink="/publicar" class="btn gold-main-btn px-4 py-2 rounded-pill fw-bold">
                         + Publicar mi primer artículo
                     </button>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ========================================== -->
-<!-- MODAL REGISTRO DE ARTÍCULOS -->
-<!-- ========================================== -->
-<div id="customArticleModal" class="custom-modal-overlay" *ngIf="isArticleModalOpen">
-    <div class="custom-modal-dialog">
-        <div class="modal-content border-0 rounded-4 p-3 modal-figma-bg shadow-lg position-relative">
-
-            <!-- BOTÓN CERRAR -->
-            <div class="modal-header border-0 pb-0 justify-content-end">
-                <button type="button" class="btn-close shadow-none" (click)="isArticleModalOpen = false"></button>
-            </div>
-
-            <div class="modal-body text-center px-4 pt-0 pb-4">
-                <h4 class="fw-bold modal-title-figma mb-2">
-                    Añadir nuevo artículo
-                </h4>
-                <p class="modal-desc-figma small mb-4">
-                    Completa los datos para publicar tu producto en UTPINO COMPARTE.
-                </p>
-
-                <!-- FORMULARIO DE NUEVO ARTÍCULO -->
-                <form (ngSubmit)="onAddArticle()" class="text-start">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Título del artículo <span class="text-danger">*</span></label>
-                        <input type="text" [(ngModel)]="newArticle.title" name="title"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="Ej: iPhone 15 Pro, Libro de Cálculo..." required>
-                    </div>
-
-                    <div class="row g-3 mb-3">
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-bold small">Precio (S/) <span class="text-danger">*</span></label>
-                            <input type="number" step="0.01" [(ngModel)]="newArticle.price" name="price"
-                                class="form-control form-control-figma rounded-pill shadow-none"
-                                placeholder="Ej: 150.00" required>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-bold small">Categoría <span class="text-danger">*</span></label>
-                            <select [(ngModel)]="newArticle.category" name="category"
-                                class="form-select form-control-figma rounded-pill shadow-none" required>
-                                <option value="" selected disabled>Selecciona...</option>
-                                <option value="electronica">Electrónica</option>
-                                <option value="ropa">Ropa</option>
-                                <option value="hogar">Hogar</option>
-                                <option value="vehiculos">Vehículos</option>
-                                <option value="libros">Libros</option>
-                                <option value="arte">Arte</option>
-                                <option value="deportes">Deportes</option>
-                                <option value="coleccion">Colección</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Estado del artículo <span class="text-danger">*</span></label>
-                        <input type="text" [(ngModel)]="newArticle.subtitle" name="subtitle"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="Ej: Como nuevo, Buen estado..." required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">URL de la Imagen <span class="text-danger">*</span></label>
-                        <input type="url" [(ngModel)]="newArticle.image" name="image"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="https://ejemplo.com/imagen.jpg" required>
-                    </div>
-
-                    <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-2">
-                        Publicar artículo
-                    </button>
-                </form>
             </div>
         </div>
     </div>
