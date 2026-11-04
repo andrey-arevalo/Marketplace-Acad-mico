@@ -138,4 +138,22 @@ public function misPublicaciones(Request $request)
             ], 500);
         }
     }
+    // Método público para listar todas las publicaciones en el catálogo del inicio
+    public function index()
+    {
+        try {
+            // Traemos todas las publicaciones con su producto relacionado ordenadas de la más reciente
+            $publicaciones = Publication::with('producto')
+                                        ->orderBy('publicacionid', 'desc')
+                                        ->get();
+
+            return response()->json($publicaciones, 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al obtener el catálogo de publicaciones',
+                'detalle' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

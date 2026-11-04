@@ -16,11 +16,24 @@ export class HeaderComponent implements OnInit {
   usuarioLogueado: string | null = null;
   inicialUsuario: string = '';
   fotoUsuario: string | null = null;
+  
+  // 🌙 Control de modo oscuro
+  isDarkMode: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // Nos suscribimos al observable escuchando múltiples variantes de campos de Laravel
+    // 1. Verificamos el tema guardado en el almacenamiento local al iniciar
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.isDarkMode = true;
+      document.documentElement.setAttribute('data-bs-theme', 'dark'); // <--- Cambiado a document.documentElement
+    } else {
+      this.isDarkMode = false;
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+    }
+
+    // 2. Nos suscribimos al observable escuchando múltiples variantes de campos de Laravel
     this.authService.usuario$.subscribe((data: any) => {
       console.log('Datos del usuario en el Header:', data);
 
@@ -48,6 +61,19 @@ export class HeaderComponent implements OnInit {
         this.inicialUsuario = '';
       }
     });
+  }
+
+// 🌙 Función para alternar el modo oscuro / claro
+  toggleDarkMode(): void {
+    this.isDarkMode = !this.isDarkMode;
+
+    if (this.isDarkMode) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
   }
 
   // Función para cerrar sesión usando el servicio

@@ -144,3 +144,309 @@ html.dark .form-control::placeholder,
 html.dark .form-select {
     color: #b0b0b0 !important;
 }
+
+/* ==========================================================================
+   MODO OSCURO TOTAL - ESTILO ESPRESSO (FIGMA)
+   ========================================================================== */
+[data-bs-theme="dark"] {
+  /* Forzamos el color de fondo y texto base en todo el documento */
+  --bs-body-bg: #1a120b !important;
+  --bs-body-color: #f5f2eb !important;
+
+  body, html, header, footer, app-inicio, main {
+    background-color: #1a120b !important;
+    color: #f5f2eb !important;
+  }
+
+  /* Sobrescribimos el bloque gigante del Hero y cualquier contenedor con fondo claro */
+  .container, .container-fluid, section, div {
+    background-color: inherit; /* Heredan el fondo oscuro salvo que tengan una tarjeta específica */
+  }
+
+  /* El banner principal superior (el bloque rosado grande del Hero) */
+  .hero-section, 
+  [class*="bg-light"], 
+  [class*="bg-white"],
+  div[style*="background"] {
+    background-color: #1a120b !important;
+    color: #f5f2eb !important;
+  }
+
+  /* Tarjetas generales y bloques internos */
+  .card, .rounded-3, .rounded-4, .p-4, .p-5 {
+    background-color: #261c14 !important;
+    color: #f5f2eb !important;
+    border-color: #3d2c21 !important;
+  }
+
+  /* Textos, títulos y subtítulos */
+  h1, h2, h3, h4, h5, h6, p, span, strong, label, a {
+    color: #f5f2eb !important;
+  }
+
+  .text-muted, .text-secondary {
+    color: #b0a498 !important;
+  }
+
+  /* Inputs, buscadores y selects */
+  .form-control, .form-select, input, textarea, select {
+    background-color: #33241b !important;
+    color: #f5f2eb !important;
+    border-color: #4a3528 !important;
+  }
+
+  .form-control::placeholder {
+    color: #9c8a7d !important;
+  }
+
+  /* Tarjetas de los productos del catálogo */
+  .card-body {
+    background-color: #261c14 !important;
+    color: #f5f2eb !important;
+  }
+}
+
+/* ==========================================================================
+   FORZAR MODO OSCURO ESPRESSO ABSOLUTO
+   ========================================================================== */
+html[data-bs-theme="dark"],
+html[data-bs-theme="dark"] body,
+html[data-bs-theme="dark"] app-root,
+html[data-bs-theme="dark"] app-inicio {
+  background-color: #1A120B !important;
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] .hero-figma-bg,
+html[data-bs-theme="dark"] .content-section-figma,
+html[data-bs-theme="dark"] .how-section-figma,
+html[data-bs-theme="dark"] .footer-figma,
+html[data-bs-theme="dark"] section,
+html[data-bs-theme="dark"] header,
+html[data-bs-theme="dark"] footer {
+  background-color: #1A120B !important;
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] .card,
+html[data-bs-theme="dark"] .card-figma-bg,
+html[data-bs-theme="dark"] .how-step-card,
+html[data-bs-theme="dark"] .card-body {
+  background-color: #261C14 !important;
+  border-color: #3D2C21 !important;
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] h1, 
+html[data-bs-theme="dark"] h2, 
+html[data-bs-theme="dark"] h3, 
+html[data-bs-theme="dark"] h4, 
+html[data-bs-theme="dark"] h5, 
+html[data-bs-theme="dark"] h6, 
+html[data-bs-theme="dark"] p, 
+html[data-bs-theme="dark"] span, 
+html[data-bs-theme="dark"] strong,
+html[data-bs-theme="dark"] .title-figma {
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] .text-muted,
+html[data-bs-theme="dark"] .card-sub,
+html[data-bs-theme="dark"] .stat-label {
+  color: #C5B8AB !important;
+}
+/* ==========================================================================
+   AJUSTE FINO DE CONTRASTE - MODO OSCURO ESPRESSO (FIGMA)
+   ========================================================================== */
+html[data-bs-theme="dark"] {
+  /* 1. Textos secundarios y descripciones que estaban invisibles */
+  .desc-figma,
+  .card-sub,
+  .stat-label,
+  .text-muted,
+  .location-text,
+  p {
+    color: #B0A498 !important; /* Tono arena claro legible */
+  }
+
+  /* 2. Botón "Centro de ayuda" y bordes secundarios */
+  .outline-custom-btn  {
+    border-color: #D4AF37 !important;
+    color: #F5F2EB !important;
+  }
+  .outline-custom-btn:hover {
+    background-color: #D4AF37 !important;
+    color: #1A120B !important;
+  }
+
+  /* 3. Pestañas de navegación de artículos (Todos, En venta, Intercambio) */
+  .tab-inactive, 
+  .tab-btn {
+    color: #9C8A7D !important;
+  }
+  
+  .tab-active {
+    color: #D4AF37 !important;
+    border-color: #D4AF37 !important;
+  }
+
+  /* 4. Tarjetas de productos en catálogo y textos internos */
+  .item-card .card,
+  .card-figma-bg {
+    background-color: #261C14 !important;
+    border: 1px solid #3D2C21 !important;
+  }
+
+  .item-card .card-title-figma,
+  .item-card .price-main {
+    color: #F5F2EB !important;
+  }
+
+  /* 5. Contador de resultados y textos pequeños */
+  #results-count {
+    color: #B0A498 !important;
+  }
+}
+/* ==========================================================================
+   MODO OSCURO ESPRESSO EXACTO AL FIGMA
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
+
+html[data-bs-theme="dark"],
+html[data-bs-theme="dark"] body {
+  background-color: #140A05 !important;
+  color: #BFA89B !important;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* 1. Títulos en estilo Serif Editorial */
+html[data-bs-theme="dark"] h1,
+html[data-bs-theme="dark"] h2,
+html[data-bs-theme="dark"] .title-figma {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  color: #F3EBE6 !important;
+  letter-spacing: -0.02em;
+}
+
+/* 2. Resaltados en oro */
+html[data-bs-theme="dark"] .gold-text,
+html[data-bs-theme="dark"] .intercambia-text {
+  color: #E5A93C !important;
+}
+
+/* 3. Secciones principales y fondos */
+html[data-bs-theme="dark"] main,
+html[data-bs-theme="dark"] section,
+html[data-bs-theme="dark"] .hero-figma-bg,
+html[data-bs-theme="dark"] .content-section-figma,
+html[data-bs-theme="dark"] .how-section-figma,
+html[data-bs-theme="dark"] .footer-figma {
+  background-color: #140A05 !important;
+}
+
+/* 4. Tarjetas (Card Destacada y Catálogo) */
+html[data-bs-theme="dark"] .card,
+html[data-bs-theme="dark"] .card-figma-bg,
+html[data-bs-theme="dark"] .item-card .card {
+  background-color: #21120B !important;
+  border: 1px solid #331C12 !important;
+  border-radius: 16px !important;
+}
+
+/* Marco interior de la imagen en las tarjetas */
+html[data-bs-theme="dark"] .custom-img-container,
+html[data-bs-theme="dark"] div[style*="background"] {
+  background-color: #2D1910 !important;
+}
+
+/* 5. Botones de Acción Principal */
+html[data-bs-theme="dark"] .gold-main-btn,
+html[data-bs-theme="dark"] .btn-gold {
+  background-color: #E5A93C !important;
+  color: #140A05 !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+
+html[data-bs-theme="dark"] .outline-custom-btn {
+  border: 1px solid #331C12 !important;
+  color: #F3EBE6 !important;
+  background: transparent !important;
+}
+
+/* 6. Píldoras de Categoría */
+html[data-bs-theme="dark"] .category-btn {
+  background-color: #1F1008 !important;
+  color: #BFA89B !important;
+  border: 1px solid #331C12 !important;
+  border-radius: 50rem !important;
+}
+
+html[data-bs-theme="dark"] .category-btn-active {
+  background-color: #E5A93C !important;
+  color: #140A05 !important;
+  border-color: #E5A93C !important;
+  font-weight: 700 !important;
+}
+
+/* 7. Selector de Pestañas (Todos / En venta / Intercambio) */
+html[data-bs-theme="dark"] .tabs-figma-container {
+  background-color: #21120B !important;
+  border: 1px solid #331C12 !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+}
+
+html[data-bs-theme="dark"] .tab-btn {
+  color: #BFA89B !important;
+  border-radius: 8px !important;
+}
+
+html[data-bs-theme="dark"] .tab-active {
+  background-color: #E5A93C !important;
+  color: #140A05 !important;
+  font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   CORRECCIÓN DE TEXTOS INVISIBLES EN HERO Y TARJETA DESTACADA
+   ========================================================================== */
+
+/* 1. Descripción y textos secundarios debajo del título principal */
+html[data-bs-theme="dark"] .desc-figma,
+html[data-bs-theme="dark"] p.desc-figma,
+html[data-bs-theme="dark"] .hero-figma-bg p {
+  color: #C5B8AB !important; /* Tono arena claro y legible */
+}
+
+/* 2. Números de las estadísticas (48.200 / 12.500 / 4.8B) */
+html[data-bs-theme="dark"] .stat-num,
+html[data-bs-theme="dark"] .stat-num span,
+html[data-bs-theme="dark"] h3.stat-num {
+  color: #F3EBE6 !important; /* Blanco crema brillante */
+}
+
+/* 3. Etiquetas de las estadísticas ("Artículos activos", etc.) */
+html[data-bs-theme="dark"] .stat-label {
+  color: #BFA89B !important;
+}
+
+/* 4. Tarjeta Destacada (Título, categoría, precio y ubicación del iPhone) */
+html[data-bs-theme="dark"] .card-title-figma,
+html[data-bs-theme="dark"] .price-main,
+html[data-bs-theme="dark"] .card-body h5,
+html[data-bs-theme="dark"] .card-body .fs-4 {
+  color: #F3EBE6 !important;
+}
+
+html[data-bs-theme="dark"] .card-sub,
+html[data-bs-theme="dark"] .location-text,
+html[data-bs-theme="dark"] .card-body small {
+  color: #C5B8AB !important;
+}
+
+/* 5. Fondo interno de la tarjeta destacada para evitar contraste oscuro sobre oscuro */
+html[data-bs-theme="dark"] .card-figma-bg {
+  background-color: #21120B !important;
+  border: 1px solid #331C12 !important;
+}

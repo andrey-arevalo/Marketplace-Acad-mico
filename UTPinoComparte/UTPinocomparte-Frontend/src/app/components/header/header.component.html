@@ -24,9 +24,12 @@
             <a routerLink="/soporte" class="text-decoration-none text-dark fw-medium" style="font-size: 0.95rem;">Soporte</a>
 
             <!-- BOTÓN MODO OSCURO -->
-            <button class="btn btn-light rounded-circle border shadow-sm p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
-                <i class="fa-regular fa-moon text-secondary"></i>
-            </button>
+<button class="btn btn-link p-2 text-decoration-none border-0" 
+        (click)="toggleDarkMode()" 
+        title="Cambiar modo">
+  <i class="fa-solid fs-5" 
+     [ngClass]="isDarkMode ? 'fa-sun text-warning' : 'fa-moon text-secondary'"></i>
+</button>
 
             <!-- ZONA CONDICIONAL: SI ESTÁ LOGUEADO (Imagen 1) -->
             <div *ngIf="usuarioLogueado; else modoInvitado" class="d-flex align-items-center gap-3">

@@ -191,3 +191,223 @@
 .how-section-figma {
     background-color: var(--bg-main) !important;
 }
+
+/* ==========================================================================
+   ANULACIÓN DEFINITIVA MODO OSCURO ESPRESSO PARA INICIO
+   ========================================================================== */
+[data-bs-theme="dark"] {
+  /* Fondo general del body y contenedor principal */
+  --bs-body-bg: #1a120b !important;
+  --bs-body-color: #f5f2eb !important;
+
+  /* Forzamos las clases de fondo personalizadas de la plantilla */
+  .hero-figma-bg,
+  .content-section-figma,
+  .how-section-figma,
+  .footer-figma,
+  .bg-light,
+  .bg-white {
+    background-color: #1a120b !important;
+    color: #f5f2eb !important;
+  }
+
+  /* Todas las tarjetas (Hero destacada, catálogo, cómo funciona, banner final) */
+  .card,
+  .card-figma-bg,
+  .how-step-card {
+    background-color: #261c14 !important;
+    border-color: #3d2c21 !important;
+    color: #f5f2eb !important;
+  }
+
+  /* Fondo de las imágenes dentro de las tarjetas */
+  .custom-img-container,
+  div[style*="background: #f8f9fa"],
+  div[style*="background:#f8f9fa"] {
+    background-color: #110b07 !important;
+  }
+
+  /* Botones redondos de favoritos y cajitas de íconos */
+  .fav-btn,
+  .how-icon-box {
+    background-color: #33241b !important;
+    border-color: #4a3528 !important;
+    color: #f5f2eb !important;
+  }
+
+  /* Botones de categorías y pestañas */
+  .category-btn {
+    background-color: #261c14 !important;
+    color: #c5b8ab !important;
+    border: 1px solid #3d2c21 !important;
+  }
+
+  .category-btn-active {
+    background-color: #d4af37 !important;
+    color: #1a120b !important;
+  }
+
+  /* Textos, títulos y subtítulos */
+  .title-figma, 
+  .card-title-figma, 
+  h1, h2, h3, h4, h5, h6, strong {
+    color: #f5f2eb !important;
+  }
+
+  .desc-figma, 
+  .card-sub, 
+  .stat-label, 
+  .text-muted, 
+  .tab-inactive {
+    color: #b0a498 !important;
+  }
+
+  /* Borde inferior de la pestaña de filtros */
+  .tabs-figma-container, 
+  .border-bottom {
+    border-color: #3d2c21 !important;
+  }
+}
+
+/* ==========================================================================
+   MODO OSCURO ESPRESSO CORREGIDO - FIGMA
+   ========================================================================== */
+[data-bs-theme="dark"] {
+  --bs-body-bg: #1A120B !important;
+  --bs-body-color: #F5F2EB !important;
+
+  /* 1. Fondo general de la página */
+  body, html, main, .main-container {
+    background-color: #1A120B !important;
+    color: #F5F2EB !important;
+  }
+
+  /* 2. Secciones principales del inicio */
+  .hero-figma-bg,
+  .content-section-figma,
+  .how-section-figma,
+  .footer-figma,
+  section {
+    background-color: #1A120B !important;
+  }
+
+  /* 3. Textos visibles en contraste (¡Resuelve el texto invisible!) */
+  h1, h2, h3, h4, h5, h6,
+  .title-figma,
+  .card-title-figma,
+  .stat-num,
+  p, span, label, strong {
+    color: #F5F2EB !important;
+  }
+
+  /* Subtítulos y etiquetas secundarias */
+  .desc-figma,
+  .card-sub,
+  .stat-label,
+  .text-muted,
+  .location-text {
+    color: #C5B8AB !important;
+  }
+
+  /* 4. Tarjetas con bordes oscuros (sin marcos blancos) */
+  .card,
+  .card-figma-bg,
+  .how-step-card {
+    background-color: #261C14 !important;
+    border: 1px solid #3D2C21 !important;
+    color: #F5F2EB !important;
+  }
+
+  /* Marco o contenedor interior de las fotos de los productos */
+  .custom-img-container,
+  div[style*="background: #f8f9fa"],
+  div[style*="background:#f8f9fa"] {
+    background-color: #1A120B !important;
+  }
+
+  /* 5. Botones de categorías y filtros */
+  .category-btn {
+    background-color: #261C14 !important;
+    color: #F5F2EB !important;
+    border: 1px solid #3D2C21 !important;
+  }
+
+  .category-btn-active {
+    background-color: #D4AF37 !important;
+    color: #1A120B !important;
+    border-color: #D4AF37 !important;
+  }
+
+  /* Botones de pestañas (Todos, En venta, Intercambio) */
+  .tab-btn {
+    color: #C5B8AB !important;
+  }
+
+  .tab-btn.tab-active {
+    color: #D4AF37 !important;
+    border-bottom: 2px solid #D4AF37 !important;
+  }
+
+  /* Botón secundario "Centro de ayuda" */
+  .outline-custom-btn {
+    border: 1px solid #C5B8AB !important;
+    color: #F5F2EB !important;
+    background-color: transparent !important;
+  }
+
+  /* Botones redondos (favoritos) */
+  .fav-btn {
+    background-color: #33241B !important;
+    border: 1px solid #3D2C21 !important;
+    color: #F5F2EB !important;
+  }
+}
+/* ==========================================================================
+   FORZAR MODO OSCURO ESPRESSO ABSOLUTO
+   ========================================================================== */
+html[data-bs-theme="dark"],
+html[data-bs-theme="dark"] body,
+html[data-bs-theme="dark"] app-root,
+html[data-bs-theme="dark"] app-inicio {
+  background-color: #1A120B !important;
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] .hero-figma-bg,
+html[data-bs-theme="dark"] .content-section-figma,
+html[data-bs-theme="dark"] .how-section-figma,
+html[data-bs-theme="dark"] .footer-figma,
+html[data-bs-theme="dark"] section,
+html[data-bs-theme="dark"] header,
+html[data-bs-theme="dark"] footer {
+  background-color: #1A120B !important;
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] .card,
+html[data-bs-theme="dark"] .card-figma-bg,
+html[data-bs-theme="dark"] .how-step-card,
+html[data-bs-theme="dark"] .card-body {
+  background-color: #261C14 !important;
+  border-color: #3D2C21 !important;
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] h1, 
+html[data-bs-theme="dark"] h2, 
+html[data-bs-theme="dark"] h3, 
+html[data-bs-theme="dark"] h4, 
+html[data-bs-theme="dark"] h5, 
+html[data-bs-theme="dark"] h6, 
+html[data-bs-theme="dark"] p, 
+html[data-bs-theme="dark"] span, 
+html[data-bs-theme="dark"] strong,
+html[data-bs-theme="dark"] .title-figma {
+  color: #F5F2EB !important;
+}
+
+html[data-bs-theme="dark"] .text-muted,
+html[data-bs-theme="dark"] .card-sub,
+html[data-bs-theme="dark"] .stat-label {
+  color: #C5B8AB !important;
+}

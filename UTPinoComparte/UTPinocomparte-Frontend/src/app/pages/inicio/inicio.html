@@ -14,9 +14,12 @@
             </p>
 
             <div class="d-flex flex-wrap gap-3 mb-5">
-                <button routerLink="/nuevo-articulo" class="stat-container" class="btn btn-lg rounded-3 px-4 fw-bold gold-main-btn">
+                <!-- Botón Empezar ahora -> Te manda a publicar (validando sesión) -->
+                <button (click)="irAPublicar()" class="btn btn-lg rounded-3 px-4 fw-bold gold-main-btn d-flex align-items-center">
                     Empezar ahora <i class="fa-solid fa-arrow-right ms-2"></i>
                 </button>
+                
+                <!-- Botón Centro de ayuda -> Te lleva al formulario de reportes de soporte -->
                 <a routerLink="/soporte"
                     class="btn btn-lg rounded-3 px-4 fw-bold outline-custom-btn text-decoration-none d-flex align-items-center">
                     Centro de ayuda
@@ -55,8 +58,8 @@
                     <small class="card-sub">Electrónica · Excelente estado</small>
                     <h5 class="fw-bold card-title-figma mt-1 mb-3">iPhone 15 Pro 256GB Titanio Natural</h5>
                     <div class="d-flex align-items-center gap-2 mb-2">
-                        <span class="fs-4 fw-bold price-main">S/ 850</span>
-                        <span class="text-decoration-line-through price-old small">S/ 990</span>
+                        <span class="fs-4 fw-bold price-main">S/ 850.00</span>
+                        <span class="text-decoration-line-through price-old small">S/ 990.00</span>
                         <span class="ms-auto fw-bold small gold-text"><i class="fa-solid fa-star"></i> 4.9</span>
                     </div>
                     <div class="location-text small d-flex align-items-center gap-1">
@@ -145,10 +148,11 @@
                     (click)="item.isFavorite = !item.isFavorite">
                     <i class="fa-regular fa-heart" [ngClass]="{'text-danger fa-solid': item.isFavorite}"></i>
                 </button>
-                <div class="overflow-hidden rounded-3 mb-3" style="height: 180px; background: #111;">
-                    <img [src]="item.image" class="w-100 h-100 object-fit-cover opacity-75 transition-scale"
-                        style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.08)'"
-                        onmouseout="this.style.transform='scale(1)'" [alt]="item.title">
+                <div class="overflow-hidden rounded-3 mb-3 d-flex align-items-center justify-content-center" style="height: 180px; background: #f8f9fa;">
+                <img [src]="item.image" 
+                 class="w-100 h-100 object-fit-contain transition-scale"
+                 style="transition: transform 0.3s ease; max-height: 180px;" 
+                 [alt]="item.title">
                 </div>
                 <div class="card-body p-0 d-flex flex-column">
                     <small class="card-sub">{{ item.subtitle }}</small>
@@ -216,7 +220,7 @@
     </div>
 </section>
 
-<!-- Footer y CTA -->
+<!-- Publicar productos -->
 <div class="container-fluid px-4 px-lg-5 py-4 footer-figma">
     <div class="row text-center gy-3 mb-5">
         <div class="col-6 col-md-3">
@@ -247,7 +251,7 @@
                 <h3 class="fw-bold title-figma mb-2" style="font-size: 1.8rem;">¿Tienes algo que vender o intercambiar?</h3>
                 <p class="text-muted small mb-4">Únete a más de 12.500 usuarios que ya usan UTPINO COMPARTE para dar nueva vida a sus artículos.</p>
                 <div>
-                    <button routerLink="/publicar" class="btn gold-main-btn px-4 py-2 rounded-pill fw-bold">
+                    <button (click)="irAPublicar()" class="btn gold-main-btn px-4 py-2 rounded-pill fw-bold">
                         + Publicar mi primer artículo
                     </button>
                 </div>
