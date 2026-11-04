@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // Asegúrate de que la ruta a tu AuthService sea la correcta
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-soporte',
@@ -13,8 +14,11 @@ import { AuthService } from '../../services/auth.service'; // Asegúrate de que 
 })
 export class SoporteComponent implements OnInit {
   private authService = inject(AuthService);
+  private http = inject(HttpClient);
 
   @ViewChild('formSoporte') formSoporte!: NgForm;
+
+  usuarioIdLogueado: number | null = null;
 
   reporte = {
     tipoProblema: '',
@@ -28,14 +32,16 @@ export class SoporteComponent implements OnInit {
   archivos: File[] = [];
   errorArchivo = '';
   enviado = false;
+  cargando = false;
 
-  readonly tamanoMaximo = 5 * 1024 * 1024;
+  readonly tamanoMaximo = 5 * 1024 * 1024; // 5 MB
 
   ngOnInit(): void {
-    // Autocompletamos nombre y correo del usuario autenticado
+    // Si hay sesión iniciada, rellenamos el nombre y correo automáticamente
     this.authService.usuario$.subscribe({
-      next: (user) => {
+      next: (user: any) => {
         if (user) {
+          this.usuarioIdLogueado = user.id || user.usuarioid || null;
           this.reporte.nombre = user.nom_usu || user.nombre || user.name || '';
           this.reporte.correo = user.correo || user.email || '';
         }
@@ -43,19 +49,18 @@ export class SoporteComponent implements OnInit {
     });
   }
 
+  // Capturamos los archivos seleccionados desde el botoncito
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-
     if (input.files) {
       this.agregarArchivos(Array.from(input.files));
     }
-
     input.value = '';
   }
 
+  // O si los arrastran a la zona de drop
   onFilesDropped(event: DragEvent): void {
     event.preventDefault();
-
     if (event.dataTransfer?.files) {
       this.agregarArchivos(Array.from(event.dataTransfer.files));
     }
@@ -65,23 +70,17 @@ export class SoporteComponent implements OnInit {
     event.preventDefault();
   }
 
+  // Validamos tamaño y que no estén repetidos
   private agregarArchivos(nuevosArchivos: File[]): void {
     this.errorArchivo = '';
-
     for (const archivo of nuevosArchivos) {
       if (archivo.size > this.tamanoMaximo) {
-        this.errorArchivo =
-          `El archivo "${archivo.name}" supera el límite de 5 MB.`;
+        this.errorArchivo = `El archivo "${archivo.name}" pesa más de 5 MB.`;
         continue;
       }
-
       const yaExiste = this.archivos.some(
-        existente =>
-          existente.name === archivo.name &&
-          existente.size === archivo.size &&
-          existente.lastModified === archivo.lastModified
+        existente => existente.name === archivo.name && existente.size === archivo.size
       );
-
       if (!yaExiste) {
         this.archivos.push(archivo);
       }
@@ -92,22 +91,57 @@ export class SoporteComponent implements OnInit {
     this.archivos.splice(indice, 1);
   }
 
+  // Enviamos todo al backend de Laravel
   enviarReporte(formulario: NgForm): void {
     if (formulario.invalid) {
       formulario.control.markAllAsTouched();
       return;
     }
 
-    this.enviado = true;
+    this.cargando = true;
 
-    console.log('Datos del reporte:', this.reporte);
-    console.log('Archivos seleccionados:', this.archivos);
+    // Armamos el FormData porque mandamos textos y archivos juntos
+    const formData = new FormData();
+    if (this.usuarioIdLogueado) {
+      formData.append('usuarioid', this.usuarioIdLogueado.toString());
+    }
+    formData.append('tipoProblema', this.reporte.tipoProblema);
+    formData.append('nombre', this.reporte.nombre);
+    formData.append('correo', this.reporte.correo);
+    formData.append('telefono', this.reporte.telefono || '');
+    formData.append('transaccion', this.reporte.transaccion || '');
+    formData.append('desc_report', this.reporte.desc_report);
 
-    // Aquí posteriormente conectaremos con tu servicio para enviar los datos al backend (SoporteController)
+    if (this.archivos.length > 0) {
+      formData.append('archivo', this.archivos[0]);
+    }
+
+    // Agregamos el token si está logueado
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    const apiUrl = 'http://127.0.0.1:8000/api/soporte';
+
+    // Petición POST hacia Laravel
+    this.http.post(apiUrl, formData, { headers }).subscribe({
+      next: (response: any) => {
+        this.cargando = false;
+        this.enviado = true;
+        console.log('Todo bien, reporte guardado:', response);
+      },
+      error: (error) => {
+        this.cargando = false;
+        console.error('Falló el envío:', error);
+        alert('Hubo un problema al enviar el reporte. Inténtalo de nuevo.');
+      }
+    });
   }
 
+  // Limpiamos el formulario pero conservamos los datos del usuario
   nuevoReporte(): void {
-    // Guardamos los datos de sesión para no perderlos al reiniciar el formulario
     const nombreActual = this.reporte.nombre;
     const correoActual = this.reporte.correo;
 

@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Soporte;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
-class SoporteController extends Controller
+class SoporteController
 {
     public function store(Request $request)
     {
-        // Validamos que los campos obligatorios lleguen correctamente
+        // Validamos que los campos obligatorios vengan bien
         $validated = $request->validate([
             'tipoProblema' => 'required|string',
             'nombre' => 'required|string|max:100',
@@ -18,19 +18,19 @@ class SoporteController extends Controller
             'telefono' => 'nullable|string|max:20',
             'transaccion' => 'nullable|string|max:100',
             'desc_report' => 'required|string|min:10|max:1000',
-            'archivo' => 'nullable|file|max:5120' // Máximo 5MB tal como validamos en Angular
+            'archivo' => 'nullable|file|max:5120' // Máximo 5MB
         ]);
 
         $filePath = null;
 
-        // Si el usuario adjuntó un archivo, lo guardamos de forma segura en el storage
+        // Si el usuario subió una evidencia, la guardamos en la carpeta pública
         if ($request->hasFile('archivo')) {
             $filePath = $request->file('archivo')->store('soportes_evidencias', 'public');
         }
 
-        // Creamos el registro en la base de datos usando Eloquent ORM
+        // Creamos el registro en la base de datos
         $soporte = Soporte::create([
-            'usuarioid' => $request->input('usuarioid'), // Opcional si está logueado
+            'usuarioid' => $request->input('usuarioid'),
             'tipoProblema' => $validated['tipoProblema'],
             'nombre' => $validated['nombre'],
             'correo' => $validated['correo'],
@@ -40,9 +40,27 @@ class SoporteController extends Controller
             'archivo_path' => $filePath
         ]);
 
+        // Simulamos el envío del correo (lo guardará en el log local por seguridad)
+        try {
+            $destinatario = "soporte@utpinocomparte.pe";
+
+            Mail::send('emails.soporte_alerta', ['soporte' => $soporte], function ($message) use ($soporte, $destinatario, $filePath) {
+                $message->to($destinatario)
+                        ->subject("Nuevo reporte de soporte: {$soporte->tipoProblema} - {$soporte->nombre}");
+                
+                // Adjuntamos el archivo al correo si existe
+                if ($filePath) {
+                    $message->attach(storage_path('app/public/' . $filePath));
+                }
+            });
+        } catch (\Exception $e) {
+            \Log::error("No se pudo enviar el correo de soporte: " . $e->getMessage());
+        }
+
+        // Retornamos respuesta exitosa en JSON
         return response()->json([
             'success' => true,
-            'message' => 'Reporte de soporte registrado con éxito',
+            'message' => 'Reporte registrado correctamente',
             'data' => $soporte
         ], 201);
     }
