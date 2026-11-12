@@ -67,9 +67,9 @@ class PublicacionController {
             ], 500);
         } 
     }
-public function misPublicaciones(Request $request)
-{
-    try {
+   public function misPublicaciones(Request $request)
+   {
+     try {
         $user = $request->user();
 
         if (!$user) {
@@ -84,14 +84,14 @@ public function misPublicaciones(Request $request)
 
         return response()->json($publicaciones, 200);
 
-    } catch (\Exception $e) {
+     } catch (\Exception $e) {
         return response()->json([
             'error' => 'Error al obtener publicaciones',
             'detalle' => $e->getMessage()
         ], 500);
-    }
-}
- public function destroy(Request $request, $id)
+     }
+   }
+    public function destroy(Request $request, $id)
     {
         $user = $request->user();
 
