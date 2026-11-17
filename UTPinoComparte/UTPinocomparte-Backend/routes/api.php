@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\SoporteController;
+use App\Http\Controllers\ChatController;
 
 Route::post('/auth/enviar-codigo', [AuthController::class, 'enviarCodigoRegistro']);
 Route::post('/auth/verificar-registro', [AuthController::class, 'verificarYRegistrar']);
@@ -20,6 +21,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/mis-publicaciones', [PublicacionController::class, 'misPublicaciones']);
     Route::delete('/publicaciones/{id}', [PublicacionController::class, 'destroy']); // <--- Ruta vital para el botón eliminar
 });
+
+// --- RUTAS DE CHAT PROTEGIDAS ---
+Route::get('/conversaciones', [ChatController::class, 'misConversaciones']); // Panel lateral tipo WhatsApp/Messenger
+Route::get('/conversaciones/{id}/mensajes', [ChatController::class, 'verMensajes']); // Abrir chat y ver historial
+Route::post('/mensajes', [ChatController::class, 'enviarMensaje']); // Enviar texto / iniciar chat
 
 // Ruta para registrar los reportes de soporte desde Angular
 Route::post('/soporte', [SoporteController::class, 'store']);
