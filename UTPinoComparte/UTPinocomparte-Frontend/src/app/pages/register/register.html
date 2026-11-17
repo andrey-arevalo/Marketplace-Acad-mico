@@ -14,91 +14,134 @@
                         class="rounded-circle border border-2 border-white shadow-sm modal-logo-figma">
                 </div>
 
-                <h4 class="fw-bold modal-title-figma mb-2">Crea tu cuenta</h4>
-                <p class="modal-desc-figma small mb-4">Regístrate con tu correo institucional UTP.</p>
+                <!-- ========================================================== -->
+                <!-- PASO 1: FORMULARIO DE DATOS Y SOLICITUD DE CÓDIGO OTP -->
+                <!-- ========================================================== -->
+                <div *ngIf="paso === 1">
+                    <h4 class="fw-bold modal-title-figma mb-2">Crea tu cuenta</h4>
+                    <p class="modal-desc-figma small mb-4">Regístrate con tu correo institucional UTP. Te enviaremos un código de verificación.</p>
 
-                <!-- FORMULARIO DE REGISTRO -->
-                <form (ngSubmit)="onRegister()">
-                    <!-- Nombre Completo -->
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">Nombre completo</label>
-                        <input type="text" [(ngModel)]="registerName" name="registerName"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="Ej. Juan Pérez" required>
-                    </div>
-
-                    <!-- Código de Estudiante -->
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">Código de estudiante</label>
-                        <input type="text" [(ngModel)]="registerCodEst" name="registerCodEst"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="Ej. U24204556" required>
-                    </div>
-
-                    <!-- Correo institucional -->
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">Correo institucional</label>
-                        <input type="email" [(ngModel)]="registerEmail" name="registerEmail"
-                            class="form-control form-control-figma rounded-pill shadow-none"
-                            placeholder="correo@utp.edu.pe" required>
-                    </div>
-
-                    <!-- Contraseña -->
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">Contraseña</label>
-                        <div class="position-relative">
-                            <input [type]="showRegisterPassword ? 'text' : 'password'" [(ngModel)]="registerPassword"
-                                name="registerPassword"
-                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
-                                placeholder="Mínimo 6 caracteres" minlength="6" required>
-                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0 bg-transparent"
-                                (click)="showRegisterPassword = !showRegisterPassword">
-                                <i class="fa-solid" [ngClass]="showRegisterPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-                            </button>
+                    <form (ngSubmit)="onSolicitarCodigo()">
+                        <!-- Nombre Completo -->
+                        <div class="mb-3 text-start">
+                            <label class="form-label fw-bold small">Nombre completo</label>
+                            <input type="text" [(ngModel)]="registerName" name="registerName"
+                                class="form-control form-control-figma rounded-pill shadow-none"
+                                placeholder="Ej. Juan Pérez" required>
                         </div>
-                    </div>
 
-                    <!-- Foto de Perfil (Opcional) -->
-                    <div class="mb-3 text-start">
-                        <label for="fotoPerfil" class="form-label fw-bold small">Foto de perfil (Opcional)</label>
-                        <input type="file" class="form-control form-control-figma rounded-pill shadow-none" id="fotoPerfil" (change)="onFileSelected($event)" accept="image/*">
-                    </div>
-
-                    <!-- Confirmar Contraseña -->
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold small">Confirmar contraseña</label>
-                        <div class="position-relative">
-                            <input [type]="showConfirmPassword ? 'text' : 'password'"
-                                [(ngModel)]="registerPasswordConfirm" name="registerPasswordConfirm"
-                                class="form-control form-control-figma rounded-pill shadow-none pe-5"
-                                placeholder="Repite tu contraseña" minlength="6" required>
-                            <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0 bg-transparent"
-                                (click)="showConfirmPassword = !showConfirmPassword">
-                                <i class="fa-solid" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-                            </button>
+                        <!-- Código de Estudiante -->
+                        <div class="mb-3 text-start">
+                            <label class="form-label fw-bold small">Código de estudiante</label>
+                            <input type="text" [(ngModel)]="registerCodEst" name="registerCodEst"
+                                class="form-control form-control-figma rounded-pill shadow-none"
+                                placeholder="Ej. U24204556" required>
                         </div>
-                    </div>
 
-                    <!-- Mensaje de Alerta / Error -->
-                    <div *ngIf="registerMessage" class="alert-message text-danger text-center mb-3 fw-bold small">
-                        {{ registerMessage }}
-                    </div>
+                        <!-- Correo institucional -->
+                        <div class="mb-3 text-start">
+                            <label class="form-label fw-bold small">Correo institucional</label>
+                            <input type="email" [(ngModel)]="registerEmail" name="registerEmail"
+                                class="form-control form-control-figma rounded-pill shadow-none"
+                                placeholder="correo@utp.edu.pe" required>
+                        </div>
 
-                    <!-- Botón Enviar -->
-                    <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3">
-                        Crear cuenta
-                    </button>
+                        <!-- Contraseña -->
+                        <div class="mb-3 text-start">
+                            <label class="form-label fw-bold small">Contraseña</label>
+                            <div class="position-relative">
+                                <input [type]="showRegisterPassword ? 'text' : 'password'" [(ngModel)]="registerPassword"
+                                    name="registerPassword"
+                                    class="form-control form-control-figma rounded-pill shadow-none pe-5"
+                                    placeholder="Mínimo 6 caracteres" minlength="6" required>
+                                <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0 bg-transparent"
+                                    (click)="showRegisterPassword = !showRegisterPassword">
+                                    <i class="fa-solid" [ngClass]="showRegisterPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                </button>
+                            </div>
+                        </div>
 
-                    <!-- Enlaces Inferiores -->
-                    <div class="d-flex justify-content-between small">
-                        <button type="button" routerLink="/inicio" class="btn btn-link p-0 text-muted text-decoration-none">
-                            <i class="fa-solid fa-arrow-left me-1"></i> Volver
+                        <!-- Confirmar Contraseña -->
+                        <div class="mb-3 text-start">
+                            <label class="form-label fw-bold small">Confirmar contraseña</label>
+                            <div class="position-relative">
+                                <input [type]="showConfirmPassword ? 'text' : 'password'"
+                                    [(ngModel)]="registerPasswordConfirm" name="registerPasswordConfirm"
+                                    class="form-control form-control-figma rounded-pill shadow-none pe-5"
+                                    placeholder="Repite tu contraseña" minlength="6" required>
+                                <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0 bg-transparent"
+                                    (click)="showConfirmPassword = !showConfirmPassword">
+                                    <i class="fa-solid" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje de Alerta / Error -->
+                        <div *ngIf="registerMessage" class="alert-message text-danger text-center mb-3 fw-bold small">
+                            {{ registerMessage }}
+                        </div>
+
+                        <!-- Botón Enviar -->
+                        <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3" [disabled]="cargando">
+                            {{ cargando ? 'Enviando código...' : 'Continuar y enviar código' }}
                         </button>
-                        <a routerLink="/login" class="fw-bold gold-link text-decoration-none">
-                            Ya tengo cuenta
-                        </a>
-                    </div>
-                </form>
+
+                        <!-- Enlaces Inferiores -->
+                        <div class="d-flex justify-content-between small">
+                            <button type="button" routerLink="/inicio" class="btn btn-link p-0 text-muted text-decoration-none">
+                                <i class="fa-solid fa-arrow-left me-1"></i> Volver
+                            </button>
+                            <a routerLink="/login" class="fw-bold gold-link text-decoration-none">
+                                Ya tengo cuenta
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+
+                <!-- ========================================================== -->
+                <!-- PASO 2: INGRESO DE CÓDIGO OTP Y FOTO DE PERFIL -->
+                <!-- ========================================================== -->
+                <div *ngIf="paso === 2">
+                    <h4 class="fw-bold modal-title-figma mb-2">Verifica tu correo</h4>
+                    <p class="modal-desc-figma small mb-3">
+                        Hemos enviado un código de 6 dígitos a <br><strong class="text-warning">{{ registerEmail }}</strong>.
+                    </p>
+
+                    <form (ngSubmit)="onVerificarYRegistrar()">
+                        <!-- Código OTP de 6 dígitos -->
+                        <div class="mb-3 text-start">
+                            <label class="form-label fw-bold small">Código de verificación</label>
+                            <input type="text" [(ngModel)]="codigoOtp" name="codigoOtp"
+                                class="form-control form-control-figma rounded-pill text-center fs-4 tracking-widest shadow-none"
+                                maxlength="6" placeholder="------" required>
+                        </div>
+
+                        <!-- Foto de Perfil (Opcional) -->
+                        <div class="mb-3 text-start">
+                            <label for="fotoPerfil" class="form-label fw-bold small">Foto de perfil (Opcional)</label>
+                            <input type="file" class="form-control form-control-figma rounded-pill shadow-none" id="fotoPerfil" (change)="onFileSelected($event)" accept="image/*">
+                        </div>
+
+                        <!-- Mensaje de Alerta / Error -->
+                        <div *ngIf="registerMessage" class="alert-message text-danger text-center mb-3 fw-bold small">
+                            {{ registerMessage }}
+                        </div>
+
+                        <!-- Botón Verificar y Crear -->
+                        <button type="submit" class="btn w-100 py-2 rounded-pill fw-bold gold-main-btn mb-3" [disabled]="cargando">
+                            {{ cargando ? 'Verificando y creando...' : 'Verificar y crear cuenta' }}
+                        </button>
+
+                        <!-- Botón para regresar al paso 1 -->
+                        <div class="text-center">
+                            <button type="button" class="btn btn-link p-0 small text-muted text-decoration-none" (click)="paso = 1">
+                                <i class="fa-solid fa-arrow-left me-1"></i> Corregir datos o correo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

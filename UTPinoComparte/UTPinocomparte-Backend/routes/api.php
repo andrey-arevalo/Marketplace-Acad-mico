@@ -6,6 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\SoporteController;
 
+Route::post('/auth/enviar-codigo', [AuthController::class, 'enviarCodigoRegistro']);
+Route::post('/auth/verificar-registro', [AuthController::class, 'verificarYRegistrar']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/publicaciones', [PublicacionController::class, 'index']);// Ruta pública para que cualquiera vea los productos en el feed

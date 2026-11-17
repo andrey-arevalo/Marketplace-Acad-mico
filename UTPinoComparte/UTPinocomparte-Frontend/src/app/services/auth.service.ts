@@ -14,14 +14,27 @@ export class AuthService {
   private usuarioSubject = new BehaviorSubject<any>(this.obtenerUsuarioGuardado());
   public usuario$: Observable<any> = this.usuarioSubject.asObservable();
 
-  // Método para Registrarse
-  register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData);
+  // ==========================================
+  // FLUJO DE REGISTRO CON CÓDIGO OTP (2 PASOS)
+  // ==========================================
+
+  // Paso 1: Envía los datos básicos y solicita el código OTP al correo UTP
+  enviarCodigo(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/enviar-codigo`, userData);
   }
+
+  // Paso 2: Envía el código OTP, la foto y completa el registro definitivo
+  verificarYRegistrar(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/verificar-registro`, formData);
+  }
+
+  // ==========================================
+  // MÉTODOS DE AUTENTICACIÓN EXISTENTES
+  // ==========================================
 
   // Método para Iniciar Sesión
   login(credentials: { correo: string; contrasena: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials);
   }
 
   // Guardar el token y los datos del usuario en el LocalStorage y actualizar el estado
