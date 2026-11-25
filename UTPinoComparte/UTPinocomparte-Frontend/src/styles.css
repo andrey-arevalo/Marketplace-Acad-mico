@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
+
 /* ========================================================================== */
 /* 1. VARIABLES GLOBALES Y CONFIGURACIÓN DE TEMAS                              */
 /* ========================================================================== */
@@ -310,7 +312,6 @@ html[data-bs-theme="dark"] {
 /* ==========================================================================
    MODO OSCURO ESPRESSO EXACTO AL FIGMA
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
 
 html[data-bs-theme="dark"],
 html[data-bs-theme="dark"] body {

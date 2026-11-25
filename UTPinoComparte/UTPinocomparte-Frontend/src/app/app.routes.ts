@@ -8,7 +8,10 @@ import { ChatComponent } from './pages/chat/chat';
 import { DetailProductComponent } from './pages/detail-product/detail-product';
 import { PublicacionProductComponent } from './pages/publicacion-product/publicacion-product';
 import { AuthModalComponent } from './pages/authmodal/authmodal';
+import { PublicProfileComponent } from './pages/publicperfil/public-profile';
 import { SoporteComponent } from './components/soporte/soporte.component';
+import { authGuard } from './guards/auth.guard';
+
 
 export const routes: Routes = [
 
@@ -20,7 +23,9 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
 
   { path: 'perfil', component: PerfilComponent },
-  { path: 'chat', component: ChatComponent },
+  { path: 'perfil-publico/:id', component: PublicProfileComponent },
+  { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
+  { path: 'chat', component: ChatComponent, canActivate: [authGuard] },
   { path: 'producto/:id', component: DetailProductComponent },
   { path: 'publicar', component: PublicacionProductComponent },
 

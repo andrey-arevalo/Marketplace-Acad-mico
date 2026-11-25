@@ -1,47 +1,55 @@
 <!-- SECCIÓN HEADER O NAVBAR (BARRA DE NAVEGACIÓN) -->
 <header class="navbar navbar-expand-lg px-4 py-3 shadow-sm" style="background-color: #fcf4ee;">
     <div class="container-fluid d-flex justify-content-between align-items-center">
-        
+
         <!-- LOGO Y TÍTULO -->
         <a class="navbar-brand d-flex align-items-center text-decoration-none" routerLink="/inicio">
-            <img src="assets/imgs/logo.jpeg" alt="Logo" class="rounded-circle border border-2 border-white me-2 brand-logo" style="width: 40px; height: 40px; object-fit: cover;">
-            <span class="fw-bold" style="color: #2b221e; font-family: 'Georgia', serif; font-size: 1.2rem;">UTPINO COMPARTE</span>
+            <img src="assets/imgs/logo.jpeg" alt="Logo"
+                class="rounded-circle border border-2 border-white me-2 brand-logo"
+                style="width: 40px; height: 40px; object-fit: cover;">
+            <span class="fw-bold" style="color: #2b221e; font-family: 'Georgia', serif; font-size: 1.2rem;">UTPINO
+                COMPARTE</span>
         </a>
 
         <!-- BARRA DE BÚSQUEDA CENTRAL -->
         <div class="flex-grow-1 mx-4 d-none d-md-block" style="max-width: 500px;">
-            <div class="input-group rounded-pill overflow-hidden border" style="background-color: #f2dbcc; border-color: #e0b8ab !important;">
+            <div class="input-group rounded-pill overflow-hidden border"
+                style="background-color: #f2dbcc; border-color: #e0b8ab !important;">
                 <span class="input-group-text bg-transparent border-0 ps-3 text-muted">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
-                <input type="text" class="form-control bg-transparent border-0 shadow-none py-2 text-dark" placeholder="Buscar artículos, marcas, categorías..." style="font-size: 0.9rem;">
+                <input type="text" class="form-control bg-transparent border-0 shadow-none py-2 text-dark"
+                    placeholder="Buscar artículos, marcas, categorías..." style="font-size: 0.9rem;">
             </div>
         </div>
 
         <!-- ACCIONES DE LA DERECHA -->
         <div class="d-flex align-items-center gap-3">
-            <a routerLink="/explorar" class="text-decoration-none text-dark fw-medium" style="font-size: 0.95rem;">Explorar</a>
-            <a routerLink="/soporte" class="text-decoration-none text-dark fw-medium" style="font-size: 0.95rem;">Soporte</a>
+            <a routerLink="/explorar" class="text-decoration-none text-dark fw-medium"
+                style="font-size: 0.95rem;">Explorar</a>
+            <a routerLink="/soporte" class="text-decoration-none text-dark fw-medium"
+                style="font-size: 0.95rem;">Soporte</a>
 
             <!-- BOTÓN MODO OSCURO -->
-<button class="btn btn-link p-2 text-decoration-none border-0" 
-        (click)="toggleDarkMode()" 
-        title="Cambiar modo">
-  <i class="fa-solid fs-5" 
-     [ngClass]="isDarkMode ? 'fa-sun text-warning' : 'fa-moon text-secondary'"></i>
-</button>
+            <button class="btn btn-link p-2 text-decoration-none border-0" (click)="toggleDarkMode()"
+                title="Cambiar modo">
+                <i class="fa-solid fs-5" [ngClass]="isDarkMode ? 'fa-sun text-warning' : 'fa-moon text-secondary'"></i>
+            </button>
 
             <!-- ZONA CONDICIONAL: SI ESTÁ LOGUEADO (Imagen 1) -->
             <div *ngIf="usuarioLogueado; else modoInvitado" class="d-flex align-items-center gap-3">
                 <!-- BOTÓN PUBLICAR -->
-                <button routerLink="/publicar" class="btn text-white px-4 rounded-pill fw-medium shadow-sm" style="background-color: #b08968; font-size: 0.9rem;" (click)="verificarAccesoPublicar()">
+                <button routerLink="/publicar" class="btn text-white px-4 rounded-pill fw-medium shadow-sm"
+                    style="background-color: #b08968; font-size: 0.9rem;" (click)="verificarAccesoPublicar()">
                     <i class="fa-solid fa-plus me-1"></i> Publicar
                 </button>
 
                 <!-- PERFIL DE USUARIO -->
                 <a routerLink="/perfil" class="d-flex align-items-center text-decoration-none">
-                    <div class="rounded-circle overflow-hidden d-flex align-items-center justify-content-center fw-bold text-white shadow-sm" style="width: 40px; height: 40px; background-color: #c49a7a; border: 2px solid #fff;">
-                        <img *ngIf="fotoUsuario; else soloInicial" [src]="fotoUsuario" alt="Foto de perfil" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="rounded-circle overflow-hidden d-flex align-items-center justify-content-center fw-bold text-white shadow-sm"
+                        style="width: 40px; height: 40px; background-color: #c49a7a; border: 2px solid #fff;">
+                        <img *ngIf="fotoUsuario; else soloInicial" [src]="fotoUsuario" alt="Foto de perfil"
+                            style="width: 100%; height: 100%; object-fit: cover;">
                         <ng-template #soloInicial>
                             <span style="font-size: 1rem;">{{ inicialUsuario }}</span>
                         </ng-template>
@@ -49,14 +57,16 @@
                 </a>
 
                 <!-- BOTÓN CERRAR SESIÓN -->
-                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-medium" style="font-size: 0.85rem;" (click)="cerrarSesion()">
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-medium"
+                    style="font-size: 0.85rem;" (click)="cerrarSesion()">
                     <i class="fa-solid fa-right-from-bracket me-1"></i> Salir
                 </button>
             </div>
 
             <!-- MODO INVITADO: SI NO HA INICIADO SESIÓN (Imagen 2) -->
             <ng-template #modoInvitado>
-                <a routerLink="/auth" class="btn text-white rounded-pill px-4 py-2 fw-medium shadow-sm" style="background-color: #b5762a; font-size: 0.9rem;">
+                <a routerLink="/auth" class="btn text-white rounded-pill px-4 py-2 fw-medium shadow-sm"
+                    style="background-color: #b5762a; font-size: 0.9rem;">
                     Iniciar sesión
                 </a>
             </ng-template>
@@ -64,4 +74,21 @@
         </div>
 
     </div>
+    <button *ngIf="mostrarBurbujaChat" type="button" (click)="irAChat()" aria-label="Abrir chat" title="Ir a mis chats"
+        class="btn text-white rounded-circle shadow-lg d-flex align-items-center justify-content-center position-relative" style="
+              position: fixed;
+              bottom: 24px;
+              right: 24px;
+              width: 58px;
+              height: 58px;
+              background-color: #b08968;
+              z-index: 1040;
+              border: none;
+             ">
+        <i class="fa-solid fa-comments fs-5"></i>
+        <span *ngIf="totalNoLeidos > 0"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ totalNoLeidos > 99 ? '99+' : totalNoLeidos }}
+        </span>
+    </button>
 </header>

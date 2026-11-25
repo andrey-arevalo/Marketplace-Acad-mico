@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { ChatService } from '../../services/chat.service';
 
 declare var bootstrap: any; // Permite controlar los modales de Bootstrap mediante JS
 
@@ -13,21 +15,31 @@ declare var bootstrap: any; // Permite controlar los modales de Bootstrap median
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  private readonly chatService = inject(ChatService);
+
   usuarioLogueado: string | null = null;
   inicialUsuario: string = '';
   fotoUsuario: string | null = null;
-  
+
   // 🌙 Control de modo oscuro
   isDarkMode: boolean = false;
 
+  // Control de Burbuja de chat (solo logueado y fuera de page/chat)
+  enRutaChat: boolean = false;
+  totalNoLeidos: number = 0;
+
   constructor(private authService: AuthService, private router: Router) {}
+
+  get mostrarBurbujaChat(): boolean {
+    return Boolean(this.usuarioLogueado) && !this.enRutaChat;
+  }
 
   ngOnInit() {
     // 1. Verificamos el tema guardado en el almacenamiento local al iniciar
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       this.isDarkMode = true;
-      document.documentElement.setAttribute('data-bs-theme', 'dark'); // <--- Cambiado a document.documentElement
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
     } else {
       this.isDarkMode = false;
       document.documentElement.setAttribute('data-bs-theme', 'light');
@@ -37,7 +49,6 @@ export class HeaderComponent implements OnInit {
     this.authService.usuario$.subscribe((data: any) => {
       console.log('Datos del usuario en el Header:', data);
 
-      // Detecta nombre en español, inglés o en tu campo personalizado de base de datos
       const nombreUsuario = data?.nombre || data?.name || data?.nom_us;
       const rawFoto = data?.foto || data?.avatar || data?.img_us;
 
@@ -45,25 +56,57 @@ export class HeaderComponent implements OnInit {
         this.usuarioLogueado = nombreUsuario;
         this.inicialUsuario = (nombreUsuario as string).charAt(0).toUpperCase();
 
-        // 🔑 AQUÍ CONSTRUIMOS LA RUTA DE LA FOTO CORRECTAMENTE:
         if (rawFoto) {
-          // Si ya viene con http/https lo dejamos igual, si no, le pegamos la URL del servidor Laravel
-          this.fotoUsuario = rawFoto.startsWith('http') 
-            ? rawFoto 
+          this.fotoUsuario = rawFoto.startsWith('http')
+            ? rawFoto
             : `http://127.0.0.1:8000/storage/${rawFoto}`;
         } else {
           this.fotoUsuario = null;
         }
 
+        this.actualizarTotalNoLeidos();
       } else {
         this.usuarioLogueado = null;
         this.fotoUsuario = null;
         this.inicialUsuario = '';
+        this.totalNoLeidos = 0;
+      }
+    });
+
+    // 3. Detecta si estamos en /chat para ocultar la burbuja cuando ya estás ahí y refresca contador
+    this.enRutaChat = this.router.url.startsWith('/chat');
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.enRutaChat = event.urlAfterRedirects.startsWith('/chat');
+        if (this.usuarioLogueado) {
+          this.actualizarTotalNoLeidos();
+        }
+      });
+  }
+
+  actualizarTotalNoLeidos(): void {
+    const token = localStorage.getItem('token') || localStorage.getItem('auth_token');
+    if (!token) {
+      this.totalNoLeidos = 0;
+      return;
+    }
+
+    this.chatService.obtenerTotalNoLeidos().subscribe({
+      next: (total) => {
+        this.totalNoLeidos = total;
+      },
+      error: () => {
+        this.totalNoLeidos = 0;
       }
     });
   }
 
-// 🌙 Función para alternar el modo oscuro / claro
+  irAChat(): void {
+    this.router.navigate(['/chat']);
+  }
+
+  // 🌙 Función para alternar el modo oscuro / claro
   toggleDarkMode(): void {
     this.isDarkMode = !this.isDarkMode;
 
@@ -78,23 +121,22 @@ export class HeaderComponent implements OnInit {
 
   // Función para cerrar sesión usando el servicio
   cerrarSesion() {
+    this.totalNoLeidos = 0;
     this.authService.cerrarSesion();
-    this.router.navigate(['/inicio']); // Redirige al inicio
+    this.router.navigate(['/inicio']);
   }
 
   // Función que controla si abre el modal de publicar o pide iniciar sesión
   verificarAccesoPublicar() {
     if (this.usuarioLogueado) {
-      // Si está logueado: Abre el modal de Bootstrap de forma dinámica
       const modalElement = document.getElementById('modalPublicar');
       if (modalElement) {
         const myModal = new bootstrap.Modal(modalElement);
         myModal.show();
       }
     } else {
-      // Si NO está logueado: Alerta y redirección a la pantalla de bienvenida/login
       alert('Por favor, inicia sesión para poder publicar un artículo.');
-      this.router.navigate(['/auth']); 
+      this.router.navigate(['/auth']);
     }
   }
 }

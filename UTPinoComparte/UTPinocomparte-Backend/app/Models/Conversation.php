@@ -16,6 +16,12 @@ class Conversation extends Model
         'fech_creacion'
     ];
 
+    // Relación con Participantes
+    public function participantes()
+    {
+        return $this->hasMany(Participant::class, 'conversacionid', 'conversacionid');
+    }
+
     // Relación con Mensajes
     public function mensajes()
     {

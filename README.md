@@ -8,11 +8,10 @@ Plataforma web desarrollada para la comunidad de la UTP que permite a estudiante
 
 Antes de comenzar, asegúrate de tener instalado el siguiente software en tu equipo:
 
-*   **Node.js**: `v18.x` o superior ([Descargar Node.js](https://nodejs.org/))
-*   **npm**: `v9.x` o superior (incluido automáticamente con Node.js)
-*   **Angular CLI**: `v16.x` o superior (`npm install -g @angular/cli`)
+*   **Node.js**: `v20.19+`, `v22.12+` o `v24+` ([Descargar Node.js](https://nodejs.org/))
+*   **npm**: incluido con Node.js
 *   **Git**: ([Descargar Git](https://git-scm.com/))
-*   **Backend / API**: Asegúrate de tener corriendo la API backend (Spring Boot / Laravel) si el proyecto consume endpoints externos.
+*   **Backend Laravel**: PHP `8.3+` y Composer
 
 ---
 
@@ -25,28 +24,48 @@ Abre tu terminal (Git Bash, Command Prompt o Terminal de VS Code) y ejecuta:
 
 git clone https://github.com/andrey-arevalo/Marketplace-Acad-mico.git
 
-2. Ingresar a la Carpeta del Proyecto
-Bash
-cd utpino-comparte
-3. Instalar las Dependencias
-Ejecuta el siguiente comando para descargar todos los paquetes de Node y Bootstrap necesarios:
+### Ejecutar el frontend
 
-Bash
-npm install
-💡 Nota: Si encuentras algún conflicto de dependencias durante la instalación, puedes forzar la resolución ejecutando:
-npm install --legacy-peer-deps
+Desde la carpeta raíz del repositorio, instala las dependencias del frontend usando el lockfile:
 
-4. Configurar las Variables de Entorno (Opcional)
-Si tu backend se ejecuta en un puerto diferente al predeterminado, revisa o crea el archivo src/environments/environment.ts con la URL de la API:
+```powershell
+cd .\UTPinoComparte\UTPinocomparte-Frontend
+npm ci
+```
 
-TypeScript
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080/api' // Ajusta según la URL de tu Backend
-};
-5. Iniciar el Servidor de Desarrollo
-Una vez instaladas las dependencias, inicia la aplicación Angular:
+Luego inicia Angular (no hace falta instalar Angular CLI globalmente):
 
-Bash
-ng serve -o
-La bandera -o abrirá automáticamente tu navegador predeterminado en http://localhost:4200/.
+```powershell
+npm start
+```
+
+Abre http://localhost:4200/ en el navegador. En un clon nuevo es necesario ejecutar `npm ci` una vez porque `node_modules` no se incluye en Git.
+
+## Inicializar el backend Laravel
+
+En un clon nuevo, la carpeta `vendor` no existe porque contiene dependencias instaladas localmente y no se incluye en Git. Instálalas antes de ejecutar Artisan:
+
+```powershell
+cd .\UTPinoComparte\UTPinocomparte-Backend
+composer install
+```
+
+Si no tienes Composer instalado globalmente, puedes usar el archivo incluido en el backend:
+
+```powershell
+php .\composer.phar install
+```
+
+Luego crea la configuración local y genera la clave de Laravel:
+
+```powershell
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+php artisan key:generate
+```
+
+Configura en `.env` la conexión a tu base de datos antes de migrar y arrancar la API:
+
+```powershell
+php artisan migrate
+php artisan serve
+```

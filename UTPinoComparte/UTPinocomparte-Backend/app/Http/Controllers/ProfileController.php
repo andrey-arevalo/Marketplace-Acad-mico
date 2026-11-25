@@ -17,4 +17,36 @@ class ProfileController extends Controller
 
         return response()->json($perfil);
     }
+
+    public function perfilPublico(int $id): JsonResponse
+    {
+        // Seleccionamos explícitamente solo los datos públicos del usuario
+        $usuario = Usuario::query()
+            ->select(['usuarioid', 'nom_us', 'foto'])
+            ->where('usuarioid', $id)
+            ->first();
+
+        if (!$usuario) {
+            return response()->json([
+                'message' => 'Usuario no encontrado.'
+            ], 404);
+        }
+
+        // Obtenemos las publicaciones del usuario junto con los datos del producto
+        // Ajusta los nombres de columnas/relación según tus modelos exactos
+        $publicaciones = Publicacion::query()
+            ->with(['producto'])
+            ->where('usuarioid', $id)
+            ->orderByDesc('publicacionid')
+            ->get();
+
+        return response()->json([
+            'usuario' => [
+                'usuarioid' => $usuario->usuarioid,
+                'nom_us'    => $usuario->nom_us,
+                'foto'      => $usuario->foto,
+            ],
+            'publicaciones' => $publicaciones,
+        ]);
+    }
 }

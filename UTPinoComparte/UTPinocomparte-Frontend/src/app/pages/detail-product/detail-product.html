@@ -1,5 +1,5 @@
 <section class="container py-5">
-  
+
   <div
     *ngIf="loading"
     class="text-center py-5">
@@ -47,6 +47,48 @@
 
         <div class="p-4 p-lg-5">
 
+          <!-- Cabecera superior: foto pequeña + nombre del usuario que publicó (va a perfil público) y botón Enviar mensaje -->
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 pb-3 mb-3 border-bottom">
+            <div
+              class="d-flex align-items-center gap-2"
+              [style.cursor]="autorId ? 'pointer' : 'default'"
+              (click)="irAPerfilPublico()"
+              title="Ver perfil público">
+
+              <img
+                *ngIf="autorFoto; else inicialAutor"
+                [src]="autorFoto"
+                [alt]="autorNombre"
+                class="rounded-circle object-fit-cover"
+                style="width: 36px; height: 36px;"
+                onerror="this.style.display='none'">
+
+              <ng-template #inicialAutor>
+                <div
+                  class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white"
+                  style="width: 36px; height: 36px; background-color: #b08968; font-size: 0.9rem;">
+                  {{ autorNombre.charAt(0).toUpperCase() }}
+                </div>
+              </ng-template>
+
+              <div>
+                <div class="fw-semibold small" [class.text-decoration-underline]="!!autorId">
+                  {{ autorNombre }}
+                </div>
+                <small class="text-muted" *ngIf="autorId">Ver perfil</small>
+              </div>
+            </div>
+
+            <button
+              *ngIf="autorId"
+              type="button"
+              class="btn btn-sm btn-outline-primary"
+              (click)="enviarMensajeAlAutor()">
+              <i class="fa-regular fa-comment-dots me-1"></i>
+              Enviar mensaje
+            </button>
+          </div>
+
           <span class="badge category-badge mb-3">
 
             {{ producto.categoria || 'Producto' }}
@@ -70,6 +112,12 @@
             </span>
 
           </div>
+
+
+          <!-- Descripción del producto si está disponible -->
+          <p class="text-muted mb-4" *ngIf="descripcionProducto" style="white-space: pre-line;">
+            {{ descripcionProducto }}
+          </p>
 
 
           <div class="product-info-list">
